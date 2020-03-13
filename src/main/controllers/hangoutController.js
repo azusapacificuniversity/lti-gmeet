@@ -1,12 +1,5 @@
 exports.gMeet = async function gMeet(context) {
-  console.log(context.requestBody);
-  if (context.requestBody.custom_canvas_course_id !== null && context.requestBody.custom_canvas_course_id !== undefined) {
-    context.res
-      .status(200)
-      .setBody(context.requestBody.custom_canvas_course_id);
-  } else {
-    context.res
-      .status(400)
-      .setBody('Class Code not specified');
-  }
+  context.res
+    .status(301)
+    .setHeader('Location', 'https://www.google.com/search?client=firefox-b-1-d&ei=NApsXvfvL9bH-gTijbOACA&q=' + context.requestBody.custom_canvas_course_id);
 };

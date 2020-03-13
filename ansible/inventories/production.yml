@@ -8,4 +8,4 @@ all:
       git_source_secret: git-intdev-ssh
     git:
       uri: 'ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git'
-      branch: use-case-lti
+      branch: develop
