@@ -1,6 +1,6 @@
 const calendarId = '';
 
-class LTIMeet {
+class LtiMeet {
 
     constructor(calendar, store) {
         this.calendar = calendar;
@@ -18,3 +18,5 @@ class LTIMeet {
     }
 
 }
+
+module.exports = LtiMeet;
