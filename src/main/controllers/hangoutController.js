@@ -1,6 +1,9 @@
 exports.gMeet = async function gMeet(context) {
-  if (context.params.body.canvas_course_id !== null && context.params.body.canvas_course_id !== undefined) {
-
+  console.log(context.requestBody);
+  if (context.requestBody.canvas_course_id !== null && context.requestBody.canvas_course_id !== undefined) {
+    context.res
+      .status(200)
+      .setBody('pong');
   } else {
     context.res
       .status(400)
