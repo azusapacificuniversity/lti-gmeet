@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: PeopleAPI
+  description: Simple API that returns People based on Affiliation
+  contact:
+    email: intdev@apu.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /hangout/url:
+    post:
+      tags:
+      - developers
+      summary: Display redirect button and a phone number
+      description: |
+        By passing in the appropriate options, you can search for
+        appropriate persons within the ldap database
+      x-exegesis-controller: hangoutController
+      operationId: gMeet
+      responses:
+        "200":
+          description: search results matching criteria
+        "400":
+          description: Class Code not specified
+  /ping:
+    get:
+      tags:
+      - developers
+      summary: receive a pong response from the server
+      description: |
+        By going to the ping endpoint, the server
+        will send pong if the request is succesful
+      operationId: getPong
+      x-exegesis-controller: pingController
+      responses:
+        "200":
+          description: receive 'pong' from the server
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pong'
+components:
+  schemas:
+    Pong:
+      type: string

@@ -1,0 +1,29 @@
+{
+  "name": "lts-google-meet",
+  "version": "1.0.0",
+  "description": "APU LTS Google Meet",
+  "main": "src/main/index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git"
+  },
+  "keywords": [
+    "APU",
+    "Canvas",
+    "API"
+  ],
+  "author": "Azusa Pacific University",
+  "license": "SEE LICENSE IN README.md",
+  "dependencies": {
+    "exegesis-express": "^2.0.0",
+    "express": "^4.17.1",
+    "knex": "^0.20.8",
+    "uuid": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

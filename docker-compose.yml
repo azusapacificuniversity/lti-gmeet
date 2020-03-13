@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src/main:/home/app
+      - ./node_modules:/home/app/node_modules
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    command: ./node_modules/nodemon/bin/nodemon.js
+
