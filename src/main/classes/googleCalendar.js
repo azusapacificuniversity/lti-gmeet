@@ -2,7 +2,7 @@ const { google } = require("googleapis");
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 const USER = "imtexpdeveloper@apu.edu";
 
-class googleCalendar {
+class GoogleCalendar {
     /**
      * @param {Object} config Service credentials used for Google API, specifically client email and private key
      * @param {String} user APU email
@@ -70,3 +70,5 @@ class googleCalendar {
         return event;
     }
 }
+
+module.exports = GoogleCalendar
