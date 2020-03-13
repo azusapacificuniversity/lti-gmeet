@@ -4,15 +4,28 @@ class StoreLookupRepo {
         this.db = 'canvas_lti_google_meets';
     }
 
-    saveCourse(event) {
-        return this.knex
-            .insert({class_id: event.id, link: event.hangoutLink, phone: event.phone, pin: event.pin})
-            .into(this.db);
+    async saveCourse(event) {
+        return await this.knex
+            .insert({class_id: event.id, link: event.link, phone: event.phone, verification_code: event.pin})
+            .into(this.db)
+            .then(result => {
+                return result;
+            })
+            .catch(err => {
+                return err;
+            });
     }
 
-    findByClassId(classId) {
-        return this.knex
-            .select().from(this.db).where('class_id', classId);
+    async findByClassId(classId) {
+        return await this.knex
+            .select()
+            .from(this.db)
+            .where('class_id', classId)
+            .then(result => {
+                return result
+            }).catch(err => {
+                return err
+            })
     }
 }
 
