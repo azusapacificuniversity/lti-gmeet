@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const exegesisExpress = require('exegesis-express');
 const pathApi = 'api/api.yaml';
+const bodyParser = require('body-parser');
 
 async function startServer() {
   const options = {
@@ -17,6 +18,10 @@ async function startServer() {
 
   const app = express()
   const port = 3000
+
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
   app.use('/api/v1', exegesisMiddleware);
 
