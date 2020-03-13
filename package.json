@@ -4,7 +4,7 @@
   "description": "APU LTS Google Meet",
   "main": "src/main/index.js",
   "scripts": {
-    "test": ""
+    "test": "./node_modules/.bin/cucumber-js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,8 @@
     "uuid": "^7.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
     "nodemon": "^2.0.2"
   }
 }

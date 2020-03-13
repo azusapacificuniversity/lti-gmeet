@@ -15,24 +15,25 @@ class GoogleCalendar {
             SCOPES,
             user
         );
-        
+
         this.calendar = google.calendar({
             version: "v3",
             auth: this.jwtClient
         });
     }
-    
+
     /**
      * Creates an event using Google Calendar API and returns an object
-     * containing only 
+     * containing only
      *  - class_id (taken from event summary)
      *  - link (hangoutsLink)
      *  - phone
      *  - pin
-     * 
+     *
+     * @param {Object} event Calendar event that will be saved
      * @param {String} calendarId Id of calendar where events will be stored
      */
-    async insert(calendarId) {        
+    async saveEvent(event, calendarId) {
         this.calendar.events.insert({
             calendarId: calendarId,
             resource: event,
@@ -53,14 +54,14 @@ class GoogleCalendar {
 
     /**
      * Creates event from Canvas data to be used with Google Calendar API
-     * 
+     *
      * @param {Object} canvasData Response from Canvas API
-     * @param {String} requestId Random client generated id 
+     * @param {String} requestId Random client generated id
      * @param {String} event Object of event that is being stored
      */
     createEvent(canvasData, requestId) {
         const today = new Date()
-        
+
         let event  = {
             summary: canvasData.course_id,
             description: canvasData.course_id,
