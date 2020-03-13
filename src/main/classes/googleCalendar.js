@@ -35,7 +35,14 @@ class GoogleCalendar {
             resource: event,
             conferenceDataVersion: 1
         }).then(event => {
-            return event.data
+            let customEvent = {
+                class_id = event.data.summary,
+                link = event.data.hangoutsLink,
+                phone = event.data.conferenceData.entryPoints[1].label,
+                pin = event.data.conferenceData.entryPoints[1].pin
+            }
+
+            return customEvent
         }).catch(err => {
             return err
         })
