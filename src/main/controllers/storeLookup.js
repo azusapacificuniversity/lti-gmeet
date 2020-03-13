@@ -4,7 +4,7 @@ class StoreLookupRepo {
     }
     saveCourse(event) {
         return this.toCanonical(this.knex
-            .insert({class_id: event.id, link: event.hangoutLink, phone: event.conferenceData.entryPoints[1].label, pin: event.conferenceData.entryPoints[1].pin})
+            .insert({class_id: event.id, link: event.hangoutLink, phone: event.phone, pin: event.pin})
             .into('canvas_lti_google_meets')
     }
     toCanonical(data) {
