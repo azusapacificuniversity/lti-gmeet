@@ -30,6 +30,7 @@ class GoogleCalendar {
      *  - phone
      *  - pin
      * 
+     * @param {Object} event Event to be saved into Google Calendar
      * @param {String} calendarId Id of calendar where events will be stored
      */
     async saveEvent(event, calendarId) {        
@@ -40,13 +41,12 @@ class GoogleCalendar {
         }).then(event => {
             let customEvent = {
                 class_id: event.data.summary,
-                link: event.data.hangoutsLink,
+                link: event.data.hangoutLink,
                 phone: event.data.conferenceData.entryPoints[1].label,
                 pin: event.data.conferenceData.entryPoints[1].pin
             }
 
             return customEvent
-            // return event.data
         }).catch(err => {
             return err
         })
@@ -57,7 +57,6 @@ class GoogleCalendar {
      * 
      * @param {Object} canvasData Response from Canvas API
      * @param {String} requestId Random client generated id 
-     * @param {String} event Object of event that is being stored
      */
     createEvent(canvasData, requestId) {
         const today = new Date()
