@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: lti.googlemeet
+  name: lti.googlemeet
+  namespace: "{{ openshift.project }}"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'lti.googlemeet:latest'
+  runPolicy: Serial
+  source:
+    git:
+      ref: "{{ git.branch }}"
+      uri: "{{ git.uri }}"
+    sourceSecret:
+      name: "{{ openshift.git_source_secret }}"
+    type: Git
+  strategy:
+    dockerStrategy:
+    type: Docker
