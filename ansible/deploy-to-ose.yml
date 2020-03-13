@@ -10,35 +10,35 @@
   tasks:
 
     - name: Create the Openshift Secret that holds the application env
-      ose:
+      k8s:
         state: present
         definition: "{{ lookup('template', './ose/secret.yml') }}"
         namespace: "{{ openshift.project }}"
         verify_ssl: no
 
     - name: Create an ImageStream
-      ose:
+      k8s:
         state: present
         definition: "{{ lookup('template', './ose/image-stream.yml') }}"
         namespace: "{{ openshift.project }}"
         verify_ssl: no
 
     - name: Create a Build Config
-      ose:
+      k8s:
         state: present
         definition: "{{ lookup('template', './ose/build-config.yml') }}"
         namespace: "{{ openshift.project }}"
         verify_ssl: no
 
     - name: Create a Deployment
-      ose:
+      k8s:
         state: present
         definition: "{{ lookup('template', './ose/deployment-config.yml') }}"
         namespace: "{{ openshift.project }}"
         verify_ssl: no
 
     - name: Create the Service
-      ose:
+      k8s:
         state: present
         definition: "{{ lookup('template', './ose/service.yml') }}"
         namespace: "{{ openshift.project }}"

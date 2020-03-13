@@ -2,14 +2,14 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   labels:
-    app: lti.googlemeet
-  name: lti.googlemeet
+    app: lti-googlemeet
+  name: lti-googlemeet
   namespace: "{{ openshift.project }}"
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'lti.googlemeet:latest'
+      name: 'lti-googlemeet:latest'
   runPolicy: Serial
   source:
     git:

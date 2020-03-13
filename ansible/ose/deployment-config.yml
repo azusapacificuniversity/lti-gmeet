@@ -2,14 +2,14 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: lti.googlemeet
-  name: lti.googlemeet
+    app: lti-googlemeet
+  name: lti-googlemeet
   namespace: "{{ openshift.project }}"
 spec:
   replicas: 1
   selector:
-    app: lti.googlemeet
-    deploymentconfig: lti.googlemeet
+    app: lti-googlemeet
+    deploymentconfig: lti-googlemeet
   strategy:
     activeDeadlineSeconds: 21600
     rollingParams:
@@ -22,15 +22,15 @@ spec:
   template:
     metadata:
       labels:
-        app: lti.googlemeet
-        deploymentconfig: lti.googlemeet
+        app: lti-googlemeet
+        deploymentconfig: lti-googlemeet
     spec:
       containers:
         - envFrom:
             - secretRef:
-                name: lti.googlemeet
+                name: lti-googlemeet
           imagePullPolicy: Always
-          name: lti.googlemeet
+          name: lti-googlemeet
           ports:
             - containerPort: 3000
               protocol: TCP
@@ -43,9 +43,9 @@ spec:
     - imageChangeParams:
         automatic: true
         containerNames:
-          - lti.googlemeet
+          - lti-googlemeet
         from:
           kind: ImageStreamTag
-          name: 'lti.googlemeet:latest'
+          name: 'lti-googlemeet:latest'
           namespace: intdev
       type: ImageChange
