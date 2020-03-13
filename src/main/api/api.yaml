@@ -23,7 +23,10 @@ paths:
       x-exegesis-controller: hangoutController
       operationId: gMeet
       requestBody:
-        content: application/x-www-form-urlencoded
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
       responses:
         "200":
           description: search results matching criteria
