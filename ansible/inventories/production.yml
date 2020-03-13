@@ -8,22 +8,4 @@ all:
       git_source_secret: git-intdev-ssh
     git:
       uri: 'ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git'
-      branch: master
-    aleks:
-      username: "{{ lookup('hashi_vault', 'secret=secret/app/lti.googlemeet/prod:aleks_username')}}"
-      password: "{{ lookup('hashi_vault', 'secret=secret/app/lti.googlemeet/prod:aleks_password')}}"
-    smb:
-      address: //stu-prod-file-1/APUDATA
-      username: "{{ lookup('hashi_vault', 'secret=secret/app/lti.googlemeet/prod:smb_username')}}"
-      password: "{{ lookup('hashi_vault', 'secret=secret/app/lti.googlemeet/prod:smb_password')}}"
-      folder: LEC
-      filename: aleks_import.csv
-      file_list: 
-      list_path: 
-    email:
-      from:
-        name: "INTDEV Team"
-        address: "intdev@apu.edu"
-      host: mailrelay.apu.edu
-      to: "Kim Bartlett <kbartlett@apu.edu>, Bryant Mathews <bmathews@apu.edu>, INTDEV Team <intdev@apu.edu>"
-    school_code: "6E690E7"
+      branch: develop
