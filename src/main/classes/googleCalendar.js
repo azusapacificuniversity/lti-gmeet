@@ -4,9 +4,8 @@ const USER = "imtexpdeveloper@apu.edu";
 
 class googleCalendar {
     /**
-     * 
-     * @param {} config 
-     * @param {String} user 
+     * @param {Object} config Service credentials used for Google API, specifically client email and private key
+     * @param {String} user APU email
      */
     constructor(config, user) {
         this.jwtClient = new google.auth.JWT(
