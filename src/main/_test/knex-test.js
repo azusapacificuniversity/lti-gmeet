@@ -4,7 +4,7 @@ const Store = require('../controllers/storeLookup.js');
 
 let knexConnection = new ConnClass(knex_json.dbtype, knex_json.hostname, knex_json.database, knex_json.username, knex_json.password)
 let store = new Store(knexConnection);
-let test = {
+let event = {
     id: 11,
     link: 'https://www.google.com',
     phone: '3238041862',
@@ -12,9 +12,9 @@ let test = {
     
 }
 // This tests if it saves to the database
-// store.saveCourse(test)
-// .then(res => { console.log(res)})
-// .catch(err => { console.log(err)})
+store.saveCourse(event)
+.then(res => { console.log(res)})
+.catch(err => { console.log(err)})
 
 // This tests if it is able to find the id
 store.findByClassId('12345')
