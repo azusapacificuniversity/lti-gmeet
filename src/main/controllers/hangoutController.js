@@ -1,5 +1,11 @@
+const GoogleCalendar = require("../classes/mockGoogleCalendar.js");
+const StoreLookupRepo = require("./storeLookupRepo.js");
+const LtiMeet = require('../classes/LtiMeet.js');
+
 exports.gMeet = async function gMeet(context) {
-  context.res
-    .status(301)
-    .setHeader('Location', 'https://www.google.com/search?client=firefox-b-1-d&ei=NApsXvfvL9bH-gTijbOACA&q=' + context.requestBody.custom_canvas_course_id);
+  litMeet = new LtiMeet(new GoogleCalendar(this.arrCalendar), new StoreLookupRepo(
+  }))
+context.res
+  .status(301)
+  .setHeader('Location', litMeet.meetByClassId(context.requestBody.custom_canvas_course_id));
 };

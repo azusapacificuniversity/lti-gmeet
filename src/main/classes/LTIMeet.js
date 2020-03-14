@@ -1,21 +1,23 @@
-const calendarId = '';
+const calendarId = 'apu.edu_ejli52n4u535n3etqhqutf0mbk@group.calendar.google.com';
 
 class LtiMeet {
 
-    constructor(calendar, store) {
-        this.calendar = calendar;
-        this.store = store;
-    }
+  constructor(calendar, store) {
+    this.calendar = calendar;
+    this.store = store;
+  }
 
-    async meetByClassId(classId) {
-        let meet = this.store.findByClassId(classId);
-        if (!meet) {
-            meet = this.calendar.createEvent({course_id: classId}, classId);
-            await this.calendar.saveEvent(meet, calendarId);
-            this.store.saveCourse(meet);
-        }
-        return meet;
+  async meetByClassId(classId) {
+    let meet = this.store.findByClassId(classId);
+    if (!meet) {
+      meet = this.calendar.createEvent({
+        course_id: classId
+      }, classId);
+      await this.calendar.saveEvent(meet, calendarId);
+      this.store.saveCourse(meet);
     }
+    return meet;
+  }
 
 }
 
