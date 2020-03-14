@@ -1,6 +1,8 @@
 const { google } = require("googleapis");
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
-const USER = "imtexpdeveloper@apu.edu";
+const knex_json = require('../_test/knexdev.json');
+const ConnClass = require('../knex/conn.js');
+const Store = require('../controllers/storeLookup.js');
 
 class GoogleCalendar {
     /**
@@ -20,33 +22,45 @@ class GoogleCalendar {
             version: "v3",
             auth: this.jwtClient
         });
+
+        this.knex = new ConnClass(knex_json.dbtype, knex_json.hostname, knex_json.database, knex_json.username, knex_json.password)
+        this.store = new Store(this.knex);
+        this.calendarId = 'apu.edu_ejli52n4u535n3etqhqutf0mbk@group.calendar.google.com'
     }
 
     /**
      * Creates an event using Google Calendar API and returns an object
-     * containing only
+     * containing only 
      *  - class_id (taken from event summary)
      *  - link (hangoutsLink)
      *  - phone
      *  - pin
-     *
-     * @param {Object} event Calendar event that will be saved
+     * 
+     * @param {Object} event Event to be saved into Google Calendar
      * @param {String} calendarId Id of calendar where events will be stored
      */
     async saveEvent(event, calendarId) {
-        this.calendar.events.insert({
+        return await this.calendar.events.insert({
             calendarId: calendarId,
             resource: event,
             conferenceDataVersion: 1
-        }).then(event => {
+        }).then(async event => {
             let customEvent = {
-                class_id = event.data.summary,
-                link = event.data.hangoutsLink,
-                phone = event.data.conferenceData.entryPoints[1].label,
-                pin = event.data.conferenceData.entryPoints[1].pin
+                class_id: parseInt(event.data.summary),
+                link: event.data.hangoutLink,
+                phone: event.data.conferenceData.entryPoints[1].uri,
+                verification_code: event.data.conferenceData.entryPoints[1].pin
             }
 
-            return customEvent
+            let result = await this.store.saveCourse(customEvent)
+                .then(res => { return res; })
+                .catch(err => { return err; });
+
+            if (result.errno) {
+                return result;
+            }
+
+            return customEvent;
         }).catch(err => {
             return err
         })
@@ -54,15 +68,14 @@ class GoogleCalendar {
 
     /**
      * Creates event from Canvas data to be used with Google Calendar API
-     *
+     * 
      * @param {Object} canvasData Response from Canvas API
-     * @param {String} requestId Random client generated id
-     * @param {String} event Object of event that is being stored
+     * @param {String} requestId Random client generated id 
      */
-    createEvent(canvasData, requestId) {
+    async createEvent(canvasData, requestId) {
         const today = new Date()
 
-        let event  = {
+        let googleEvent = {
             summary: canvasData.course_id,
             description: canvasData.course_id,
             start: {
@@ -75,12 +88,16 @@ class GoogleCalendar {
             },
             conferenceData: {
                 createRequest: {
-                        requestId: requestId
+                    requestId: requestId
                 }
             }
         }
 
-        return event;
+        let ltiEvent = await this.saveEvent(googleEvent, this.calendarId)
+            .then(storedEvent => { return storedEvent; })
+            .catch(err => { return err;})
+
+        return ltiEvent;
     }
 }
 
