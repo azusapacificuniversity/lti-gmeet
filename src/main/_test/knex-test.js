@@ -14,9 +14,9 @@ let event = {
 // This tests if it saves to the database
 store.saveCourse(event)
 .then(res => { console.log(res)})
-.catch(err => { console.log(err)})
+.catch(err => { console.err(err)})
 
 // This tests if it is able to find the id
 store.findByClassId('12345')
 .then(res => { console.log(res)})
-.catch(err => { console.log(err)})
+.catch(err => { console.err(err)})

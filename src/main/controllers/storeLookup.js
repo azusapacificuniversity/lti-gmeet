@@ -6,7 +6,7 @@ class StoreLookupRepo {
 
     async saveCourse(event) {
         return await this.knex
-            .insert({class_id: event.id, link: event.link, phone: event.phone, verification_code: event.pin})
+            .insert({class_id: event.class_id, link: event.link, phone: event.phone, verification_code: event.verification_code})
             .into(this.db)
             .then(result => {
                 return result;
