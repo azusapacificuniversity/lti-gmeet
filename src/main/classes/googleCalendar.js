@@ -1,12 +1,14 @@
 const { google } = require("googleapis");
+var crypto = require('crypto');
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
 class GoogleCalendar {
     /**
      * @param {Object} config Service credentials used for Google API, specifically client email and private key
      * @param {String} user APU email
+     * @param {String} calendarId, the Id of the Calendar where the events are stored
      */
-    constructor(config, user) {
+    constructor(config, user, calendarId) {
         this.jwtClient = new google.auth.JWT(
             config.client_email,
             null,
@@ -20,7 +22,7 @@ class GoogleCalendar {
             auth: this.jwtClient
         });
 
-        this.calendarId = 'apu.edu_ejli52n4u535n3etqhqutf0mbk@group.calendar.google.com'
+        this.calendarId = calendarId;
     }
 
     /**
@@ -40,31 +42,26 @@ class GoogleCalendar {
             resource: event,
             conferenceDataVersion: 1
         }).then(async event => {
-            let customEvent = {
+            return {
                 class_id: parseInt(event.data.summary),
                 link: event.data.hangoutLink,
                 phone: event.data.conferenceData.entryPoints[1].uri,
                 verification_code: event.data.conferenceData.entryPoints[1].pin
             }
-
-            return customEvent;
-        }).catch(err => {
-            return err
-        })
+        }).catch(err => { throw err });
     }
 
     /**
      * Creates event from Canvas data to be used with Google Calendar API
      * 
-     * @param {Object} canvasData Response from Canvas API
-     * @param {String} requestId Random client generated id 
+     * @param {Object} canvas_course_id Course ID coming from POST Request of Canvas LTI
      */
-    async createEvent(canvasData, requestId) {
+    async createEvent(canvas_course_id) {
         const today = new Date()
 
         let googleEvent = {
-            summary: canvasData.course_id,
-            description: canvasData.course_id,
+            summary: canvas_course_id,
+            description: canvas_course_id,
             start: {
                 dateTime: today.toISOString(),
                 timeZone: "America/Los_Angeles"
@@ -75,7 +72,7 @@ class GoogleCalendar {
             },
             conferenceData: {
                 createRequest: {
-                    requestId: requestId
+                    requestId: randomValueHex(12)
                 }
             }
         }
@@ -85,6 +82,13 @@ class GoogleCalendar {
             .catch(err => { return err;})
 
         return ltiEvent;
+    }
+
+    static randomValueHex(len) {
+      return crypto
+        .randomBytes(Math.ceil(len / 2))
+        .toString('hex') // convert to hexadecimal format
+        .slice(0, len) // return required number of characters
     }
 }
 
