@@ -1,8 +1,9 @@
 const TABLE = 'canvas_lti_google_meets';
 
 class StoreLookupRepo {
-    constructor(_knex) {
+    constructor(_knex, _logger = console) {
         this.knex = _knex;
+        this.logger = _logger;
     }
 
     async saveCourse(event) {
