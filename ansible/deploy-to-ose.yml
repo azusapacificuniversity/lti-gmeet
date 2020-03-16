@@ -3,6 +3,13 @@
   hosts: localhost
   connection: local
   gather_facts: no
+  module_defaults:
+    k8s:
+      state: present
+      merge_type: json
+      namespace: "{{ openshift.project }}"
+      verify_ssl: no
+
 
   vars:
     ansible_python_interpreter: "{{ ansible_playbook_python }}"
@@ -11,35 +18,20 @@
 
     - name: Create the Openshift Secret that holds the application env
       k8s:
-        state: present
         definition: "{{ lookup('template', './ose/secret.yml') }}"
-        namespace: "{{ openshift.project }}"
-        verify_ssl: no
 
     - name: Create an ImageStream
       k8s:
-        state: present
         definition: "{{ lookup('template', './ose/image-stream.yml') }}"
-        namespace: "{{ openshift.project }}"
-        verify_ssl: no
 
     - name: Create a Build Config
       k8s:
-        state: present
         definition: "{{ lookup('template', './ose/build-config.yml') }}"
-        namespace: "{{ openshift.project }}"
-        verify_ssl: no
 
     - name: Create a Deployment
       k8s:
-        state: present
         definition: "{{ lookup('template', './ose/deployment-config.yml') }}"
-        namespace: "{{ openshift.project }}"
-        verify_ssl: no
 
     - name: Create the Service
       k8s:
-        state: present
         definition: "{{ lookup('template', './ose/service.yml') }}"
-        namespace: "{{ openshift.project }}"
-        verify_ssl: no
