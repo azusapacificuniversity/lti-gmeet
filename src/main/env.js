@@ -1,6 +1,8 @@
 require('dotenv').config();
 const util = require('util');
 const knex = require('./knex/conn.js');
+const GoogleCalendar = require('./classes/googleCalendar.js');
+const StoreLookupRepo = require('./classes/storeLookup.js');
 const backend = process.env.BACKEND;
 
 function createKnexConn(_logger = console) {
@@ -21,7 +23,7 @@ function createStoreRepo(_knex = createKnexConn(), _logger = console) {
 function createGCal(_logger = console) {
     return new GoogleCalendar(
         process.env.GCAL_SERVICE_ACCOUNT,
-        process.env.GCAL_PRIVATE_KEY,
+        JSON.parse(`"${process.env.GCAL_PRIVATE_KEY}"`),
         process.env.GCAL_CALENDAR_USER,
         process.env.GCAL_CALENDAR_ID,
     );

@@ -42,7 +42,7 @@ class GoogleCalendar {
             calendarId: calendarId,
             resource: event,
             conferenceDataVersion: 1
-        }).then(async event => {
+        }).then(event => {
             return {
                 class_id: parseInt(event.data.summary),
                 link: event.data.hangoutLink,
@@ -73,19 +73,18 @@ class GoogleCalendar {
             },
             conferenceData: {
                 createRequest: {
-                    requestId: randomValueHex(12)
+                    requestId: this.randomValueHex(12)
                 }
             }
         }
 
         let ltiEvent = await this.saveEvent(googleEvent, this.calendarId)
-            .then(storedEvent => { return storedEvent; })
-            .catch(err => { return err;})
+            .catch(err => { throw err;})
 
         return ltiEvent;
     }
 
-    static randomValueHex(len) {
+    randomValueHex(len) {
       return crypto
         .randomBytes(Math.ceil(len / 2))
         .toString('hex') // convert to hexadecimal format

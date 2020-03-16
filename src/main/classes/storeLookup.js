@@ -15,24 +15,21 @@ class StoreLookupRepo {
                 verification_code: event.verification_code
             })
             .into(TABLE)
-            .then(result => {
-                return result;
-            })
             .catch(err => {
                 throw err;
             });
     }
 
     async findByClassId(classId) {
-        return await this.knex
+        var result = await this.knex
             .select()
             .from(TABLE)
             .where('class_id', classId)
-            .then(result => {
-                return result
-            }).catch(err => {
+            .catch(err => {
+                this.logger.error(err)
                 throw err
-            })
+            });
+        return result.length ? result[0] : null;
     }
 }
 
