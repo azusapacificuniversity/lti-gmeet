@@ -1,12 +1,19 @@
 const express = require('express')
 const fs = require('fs');
 const path = require('path');
+const env = require('./env.js');
 const exegesisExpress = require('exegesis-express');
+const exegesisContext = require('exegesis-plugin-context');
 const pathApi = 'api/api.yaml';
 const bodyParser = require('body-parser');
 
 async function startServer() {
   const options = {
+    plugins: [
+      exegesisContext({
+        knex: env.createKnexConn()
+      })
+    ],
     controllers: path.resolve(__dirname, './controllers'),
     allowMissingControllers: false,
   };
