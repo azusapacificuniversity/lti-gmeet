@@ -21,7 +21,7 @@ class StoreLookupRepo {
     }
 
     async findByClassId(classId) {
-        var result = await this.knex
+        let result = await this.knex
             .select()
             .from(TABLE)
             .where('class_id', classId)
