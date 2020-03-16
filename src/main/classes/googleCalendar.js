@@ -1,8 +1,5 @@
 const { google } = require("googleapis");
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
-const knex_json = require('../_test/knexdev.json');
-const ConnClass = require('../knex/conn.js');
-const Store = require('../controllers/storeLookup.js');
 
 class GoogleCalendar {
     /**
@@ -23,8 +20,6 @@ class GoogleCalendar {
             auth: this.jwtClient
         });
 
-        this.knex = new ConnClass(knex_json.dbtype, knex_json.hostname, knex_json.database, knex_json.username, knex_json.password)
-        this.store = new Store(this.knex);
         this.calendarId = 'apu.edu_ejli52n4u535n3etqhqutf0mbk@group.calendar.google.com'
     }
 
@@ -50,14 +45,6 @@ class GoogleCalendar {
                 link: event.data.hangoutLink,
                 phone: event.data.conferenceData.entryPoints[1].uri,
                 verification_code: event.data.conferenceData.entryPoints[1].pin
-            }
-
-            let result = await this.store.saveCourse(customEvent)
-                .then(res => { return res; })
-                .catch(err => { return err; });
-
-            if (result.errno) {
-                return result;
             }
 
             return customEvent;
