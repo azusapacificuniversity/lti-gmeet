@@ -30,6 +30,12 @@ paths:
       responses:
         "200":
           description: search results matching criteria
+        "301":
+          description: Redirect to Google Meet
+          content:
+            text/html:
+              schema:
+                type: object
         "400":
           description: Class Code not specified
   /ping:

@@ -1,11 +1,10 @@
-const GoogleCalendar = require("../classes/mockGoogleCalendar.js");
-const StoreLookupRepo = require("./storeLookupRepo.js");
+const env = require("../env.js");
 const LtiMeet = require('../classes/LtiMeet.js');
 
 exports.gMeet = async function gMeet(context) {
-  litMeet = new LtiMeet(new GoogleCalendar(this.arrCalendar), new StoreLookupRepo(
-  }))
-context.res
-  .status(301)
-  .setHeader('Location', litMeet.meetByClassId(context.requestBody.custom_canvas_course_id));
+    ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(context.knex));
+    let meet = await ltiMeet.meetByClassId(context.requestBody.custom_canvas_course_id);
+    context.res
+        .status(301)
+        .setHeader('Location', meet.link);
 };

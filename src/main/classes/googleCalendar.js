@@ -4,17 +4,18 @@ const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
 class GoogleCalendar {
     /**
-     * @param {Object} config Service credentials used for Google API, specifically client email and private key
-     * @param {String} user APU email
-     * @param {String} calendarId, the Id of the Calendar where the events are stored
+     * @param {String} service_account The service account used authorized to create events in the calendar
+     * @param {String} private_key An RSA private Key to auth the service account
+     * @param {String} cal_user APU email, the user to whon the calendar belongs
+     * @param {String} cal_id, the Id of the Calendar where the events are stored
      */
-    constructor(config, user, calendarId) {
+    constructor(service_account, private_key, cal_user, cal_id) {
         this.jwtClient = new google.auth.JWT(
-            config.client_email,
+            service_account,
             null,
-            config.private_key,
+            private_key,
             SCOPES,
-            user
+            cal_user
         );
 
         this.calendar = google.calendar({
@@ -22,7 +23,7 @@ class GoogleCalendar {
             auth: this.jwtClient
         });
 
-        this.calendarId = calendarId;
+        this.calendarId = cal_id;
     }
 
     /**
@@ -41,7 +42,7 @@ class GoogleCalendar {
             calendarId: calendarId,
             resource: event,
             conferenceDataVersion: 1
-        }).then(async event => {
+        }).then(event => {
             return {
                 class_id: parseInt(event.data.summary),
                 link: event.data.hangoutLink,
@@ -72,19 +73,18 @@ class GoogleCalendar {
             },
             conferenceData: {
                 createRequest: {
-                    requestId: randomValueHex(12)
+                    requestId: this.randomValueHex(12)
                 }
             }
         }
 
         let ltiEvent = await this.saveEvent(googleEvent, this.calendarId)
-            .then(storedEvent => { return storedEvent; })
-            .catch(err => { return err;})
+            .catch(err => { throw err;})
 
         return ltiEvent;
     }
 
-    static randomValueHex(len) {
+    randomValueHex(len) {
       return crypto
         .randomBytes(Math.ceil(len / 2))
         .toString('hex') // convert to hexadecimal format

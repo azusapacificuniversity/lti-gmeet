@@ -1,30 +1,36 @@
 require('dotenv').config();
 const util = require('util');
-const ldap = require('./ldap/conn.js');
 const knex = require('./knex/conn.js');
+const GoogleCalendar = require('./classes/googleCalendar.js');
+const StoreLookupRepo = require('./classes/storeLookup.js');
 const backend = process.env.BACKEND;
 
 function createKnexConn(_logger = console) {
-  return new knex(
-    process.env.DB_TYPE,
-    process.env.DB_HOST,
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASS,
-    _logger
-  );
+    return new knex(
+        process.env.DB_TYPE,
+        process.env.DB_HOST,
+        process.env.DB_NAME,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        _logger
+    );
 }
 
-function createConn(_logger = console) {
-  return createKnexConn(_logger);
+function createStoreRepo(_knex = createKnexConn(), _logger = console) {
+    return new StoreLookupRepo(_knex, _logger);
 }
 
-function createRepository(repo, _logger = console) {
-  var Repo = require(util.format('./%s/repos/%s.js', backend, repo))
-  return new Repo(createConn(), _logger);
+function createGCal(_logger = console) {
+    return new GoogleCalendar(
+        process.env.GCAL_SERVICE_ACCOUNT,
+        JSON.parse(`"${process.env.GCAL_PRIVATE_KEY}"`),
+        process.env.GCAL_CALENDAR_USER,
+        process.env.GCAL_CALENDAR_ID,
+    );
 }
 
 module.exports = {
-  createLdapConn,
-  createRepository
+    createStoreRepo,
+    createGCal,
+    createKnexConn
 };
