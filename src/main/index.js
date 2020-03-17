@@ -30,7 +30,7 @@ async function startServer() {
         extended: true
     }));
 
-    app.use('/api/v1', exegesisMiddleware);
+    // app.use('/api/v1', exegesisMiddleware);
 
     app.get('/spec', (req, res) => {
         fs.readFile(path.resolve(__dirname + "/" + pathApi), function(err,
@@ -40,8 +40,11 @@ async function startServer() {
         })
     });
 
+    app.get('/html', (req, res) => {
+        res.sendFile(__dirname + "/views/index.html")
+    });
+
     app.use((req, res) => {
-        console.log(req);
         res.status(404).json({
             message: `Not found`
         });
