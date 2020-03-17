@@ -40,7 +40,7 @@ async function startServer() {
         })
     });
 
-    app.get('/html', (req, res) => {
+    app.post('/html', (req, res) => {
         res.sendFile(__dirname + "/views/index.html")
     });
 
