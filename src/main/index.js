@@ -52,7 +52,7 @@ async function startServer() {
     });
   });
 
-  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+  app.listen(port, () => console.log(`Google Meet LTI app listening on port ${port}!`))
 }
 
 startServer();
