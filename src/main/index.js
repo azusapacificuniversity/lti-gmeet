@@ -23,8 +23,6 @@ async function startServer() {
         options
     );
 
-    console.log(exegesisMiddleware);
-
     const app = express()
     const port = 3000
 
@@ -43,6 +41,7 @@ async function startServer() {
     });
 
     app.use((req, res) => {
+        console.log(req);
         res.status(404).json({
             message: `Not found`
         });
