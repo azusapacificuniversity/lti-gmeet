@@ -3,6 +3,7 @@ all:
     localhost
   vars:
     env: PROD
+    hostname: google-meet-lti.apu.edu
     openshift:
       project: intdev
       git_source_secret: git-intdev-ssh

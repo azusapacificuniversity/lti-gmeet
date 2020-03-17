@@ -3,6 +3,7 @@ all:
     localhost
   vars:
     env: DEV
+    hostname: lti-googlemeet-intdev.cloudapps.sysdev.ose.apu.edu
     openshift:
       project: intdev
       git_source_secret: git-intdev-ssh
