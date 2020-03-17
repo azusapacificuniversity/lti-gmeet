@@ -8,51 +8,47 @@ const pathApi = 'api/api.yaml';
 const bodyParser = require('body-parser');
 
 async function startServer() {
-  const options = {
-    plugins: [
-      exegesisContext({
-        knex: env.createKnexConn()
-      })
-    ],
-    controllers: path.resolve(__dirname, './controllers'),
-    allowMissingControllers: false,
-  };
+    const options = {
+        plugins: [
+            exegesisContext({
+                knex: env.createKnexConn()
+            })
+        ],
+        controllers: path.resolve(__dirname, './controllers'),
+        allowMissingControllers: false,
+    };
 
-  const exegesisMiddleware = await exegesisExpress.middleware(
-    path.resolve(__dirname, pathApi),
-    options
-  );
+    const exegesisMiddleware = await exegesisExpress.middleware(
+        path.resolve(__dirname, pathApi),
+        options
+    );
 
-  const app = express()
-  const port = 3000
+    console.log(exegesisMiddleware);
 
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+    const app = express()
+    const port = 3000
 
-  app.use('/api/v1', exegesisMiddleware);
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
 
-  app.get('/spec', (req, res) => {
-    fs.readFile(path.resolve(__dirname + "/" + pathApi), function(err,
-      data) {
-      res.setHeader('Content-type', 'text/plain');
-      res.send(data);
-    })
-  });
+    app.use('/api/v1', exegesisMiddleware);
 
-  app.use((req, res) => {
-    res.status(404).json({
-      message: `Not found`
+    app.get('/spec', (req, res) => {
+        fs.readFile(path.resolve(__dirname + "/" + pathApi), function(err,
+            data) {
+            res.setHeader('Content-type', 'text/plain');
+            res.send(data);
+        })
     });
-  });
 
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: `Internal error: ${err.message}`
+    app.use((req, res) => {
+        res.status(404).json({
+            message: `Not found`
+        });
     });
-  });
 
-  app.listen(port, () => console.log(`Google Meet LTI app listening on port ${port}!`))
+    app.listen(port, () => console.log(`Google Meet LTI app listening on port ${port}!`))
 }
 
 startServer();
