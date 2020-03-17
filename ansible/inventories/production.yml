@@ -9,7 +9,7 @@ all:
       git_source_secret: git-intdev-ssh
     git:
       uri: 'ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git'
-      branch: master
+      branch: origin/bugfix/INTLMS-368-investigate-404-response-on-ios-devices
     database:
       db_type: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:db_type')}}"
       db_name: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:db_name')}}"
