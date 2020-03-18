@@ -1,5 +1,6 @@
-<h1>Here</h1>
+<a id="link_to_hangouts" target="_blank" rel="noopener noreferrer" type="button" href="{{meet_url}}/{{canvas_course_id}}" style="hieght:300px;width:600px;display:inline-block;"><button>Click here to join the Google Meet</button></a>
 
-<p>some text</p>
-
-<a target="_blank" rel="noopener noreferrer" type="button" href="http://www.google.com" style="hieght:100px;width:200px;display:inline-block;"><button>Link Text</button></a>
+<script>
+  var link = document.getElementById('link_to_hangouts');
+  link.setAttribute('href', '{{meet_url}}');
+</script>
