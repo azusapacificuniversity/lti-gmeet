@@ -13,6 +13,7 @@ exports.gMeet = async function gMeet(context) {
 };
 
 exports.ltiHtmlPost = function(context) {
+    context.res.setHeader('Content-Type', 'text/html');
     return lti(context.knex, context.requestBody.custom_canvas_course_id);
 }
 
