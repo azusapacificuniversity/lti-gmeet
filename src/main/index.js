@@ -43,19 +43,6 @@ async function startServer() {
         })
     });
 
-    app.post('/html', async (req, res) => {
-        let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
-        console.log(req.body);
-        let meet = await ltiMeet.meetByClassId(req.body.custom_canvas_course_id);
-
-        var source = fs.readFileSync(path.resolve(__dirname + "/views/index.html"));
-        var template = handlebars.compile(source);
-
-        var result = template(meet);
-
-        res.send(result);
-    });
-
     app.use((req, res) => {
         res.status(404).json({
             message: `Not found`

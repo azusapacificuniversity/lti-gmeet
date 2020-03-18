@@ -1,3 +1,45 @@
-<p>This tool needs to be loaded in a new browser window</p>
+<!DOCTYPE html>
+<html>
 
-<a id="link_to_hangouts" target="_blank" rel="noopener noreferrer" type="button" href="{{link}}" style="hieght:300px;width:600px;display:inline-block;"><button>Click here to join the Google Meet</button></a>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Google Meet</title>
+    <style type="text/css" media="screen">
+        .btn-block {
+            display: block;
+            width: 100%;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Google Meet</h1>
+    <p>
+        <a type="button" target="_blank" href="{{link}}"><button class="btn-block">Go to Google Meet</button></a>
+    </p>
+
+    <h4>Optionally:</h4>
+    <p>
+        <small>Use your phone to listen and speak to the video call. Your video joins here when your phone connects.</small>
+        <br />
+        On your phone, dial:
+        <br />
+        <em>{{phone}}</em>
+        <br />
+        Enter this PIN when prompted:
+        <br />
+        <em>{{verification_code}}</em>
+    </p>
+</body>
+
+</html>
