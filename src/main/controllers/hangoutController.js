@@ -12,16 +12,16 @@ exports.gMeet = async function gMeet(context) {
         .setHeader('Location', meet.link);
 };
 
-exports.ltiHtml = function(context) {
+exports.ltiHtmlPost = function(context) {
     return lti(context.knex, context.requestBody.custom_canvas_course_id);
 }
 
-exports.ltiHtmlTest = function(context) {
+exports.ltiHtmlGet = function(context) {
     context.res.setHeader('Content-Type', 'text/html');
     return lti(context.knex, context.params.query.course_id);
 }
 
-async function lti (knex, course_id) {
+async function lti(knex, course_id) {
     let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
     let meet = await ltiMeet.meetByClassId(course_id);
 

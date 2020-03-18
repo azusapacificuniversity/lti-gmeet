@@ -18,7 +18,7 @@ paths:
       description: |
         By passing in custom_canvas_course_id you get the LTI HTML page
       x-exegesis-controller: hangoutController
-      operationId: ltiHtmlTest
+      operationId: ltiHtmlGet
       parameters:
       - name: course_id
         in: query
@@ -42,7 +42,7 @@ paths:
       description: |
         By passing in custom_canvas_course_id you get the LTI HTML page
       x-exegesis-controller: hangoutController
-      operationId: ltiHtml
+      operationId: ltiHtmlPost
       requestBody:
         content:
           application/x-www-form-urlencoded:
