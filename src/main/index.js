@@ -6,12 +6,15 @@ const exegesisExpress = require('exegesis-express');
 const exegesisContext = require('exegesis-plugin-context');
 const pathApi = 'api/api.yaml';
 const bodyParser = require('body-parser');
+const handlebars = require('handlebars');
+const LtiMeet = require('./classes/LtiMeet.js');
+const knex = env.createKnexConn()
 
 async function startServer() {
     const options = {
         plugins: [
             exegesisContext({
-                knex: env.createKnexConn()
+                knex: knex
             })
         ],
         controllers: path.resolve(__dirname, './controllers'),
@@ -30,7 +33,7 @@ async function startServer() {
         extended: true
     }));
 
-    // app.use('/api/v1', exegesisMiddleware);
+    app.use('/api/v1', exegesisMiddleware);
 
     app.get('/spec', (req, res) => {
         fs.readFile(path.resolve(__dirname + "/" + pathApi), function(err,
@@ -40,8 +43,17 @@ async function startServer() {
         })
     });
 
-    app.post('/html', (req, res) => {
-        res.sendFile(__dirname + "/views/index.html")
+    app.post('/html', async (req, res) => {
+        let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
+        console.log(req.body);
+        let meet = await ltiMeet.meetByClassId(req.body.custom_canvas_course_id);
+
+        var source = fs.readFileSync(path.resolve(__dirname + "/views/index.html"));
+        var template = handlebars.compile(source);
+
+        var result = template(meet);
+
+        res.send(result);
     });
 
     app.use((req, res) => {
