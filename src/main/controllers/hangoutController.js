@@ -24,8 +24,8 @@ async function lti(knex, course_id, context) {
             .setHeader('Location', meet.link);
         return;
     }
-    console.log(context);
-    let pathStr = context.roles && context.roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
+    let roles = context.requestBody.roles;
+    let pathStr = roles && roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
     let source = fs.readFileSync(path.resolve(__dirname + pathStr)).toString();
     let template = handlebars.compile(source);
 
