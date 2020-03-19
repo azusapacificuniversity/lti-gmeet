@@ -27,7 +27,9 @@ async function lti(knex, course_id, context) {
     let roles = context.requestBody.roles;
     let pathStr = roles && roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
     let source = fs.readFileSync(path.resolve(__dirname + pathStr)).toString();
-    let template = handlebars.compile(source);
+    let template = handlebars.compile(source, {
+        link: env.createOAuthClient().generateAuthUrl(course_id)
+    });
 
     return template(meet);
 }
