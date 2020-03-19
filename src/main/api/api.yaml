@@ -37,26 +37,6 @@ paths:
                 type: string
         "400":
           description: Class Code not specified
-    post:
-      summary: Display LTI results for students
-      description: |
-        By passing in custom_canvas_course_id you get the LTI HTML page
-      x-exegesis-controller: hangoutController
-      operationId: ltiHtmlPost
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-      responses:
-        "200":
-          description: search results matching criteria
-          content:
-            text/html:
-              schema:
-                type: object
-        "400":
-          description: Class Code not specified
   /hangout/url:
     post:
       tags:
@@ -66,7 +46,7 @@ paths:
         By passing in the appropriate options, you can search for
         appropriate persons within the ldap database
       x-exegesis-controller: hangoutController
-      operationId: gMeet
+      operationId: ltiHtmlPost
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -74,7 +54,11 @@ paths:
               type: object
       responses:
         "200":
-          description: search results matching criteria
+          description: Not ready, needs authorization
+          content:
+            text/html:
+              schema:
+                type: object
         "301":
           description: Redirect to Google Meet
           content:

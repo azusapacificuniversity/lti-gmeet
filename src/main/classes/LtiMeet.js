@@ -10,17 +10,15 @@ class LtiMeet {
 
         // there is a meet! Return the meet
         if (meet) {
-            console.log(`meet not found, creating ${classId}`);
-            return meet;
+            console.log(`meet found for class: ${classId}`);
+            return findMeetByClassId(classId);
         }
 
-        console.log(`meet not found ${classId}`);
+        console.log(`meet not found for class: ${classId}`);
 
         if (forceCreate) {
             console.log(`Force creating meet for ${classId}`);
-            meet = await this.calendar.createEvent(classId);
-            this.store.saveCourse(meet);
-            return meet;
+            return createMeet(classId);
         }
 
         // No meet, can not create
@@ -29,6 +27,16 @@ class LtiMeet {
         } else { // if student
             // show not ready page
         }
+    }
+
+    async findMeetByClassId(classId) {
+        return await this.store.findByClassId(classId);
+    }
+
+    async createMeet(classId) {
+        meet = await this.calendar.createEvent(classId);
+        this.store.saveCourse(meet);
+        return meet;
     }
 
 }

@@ -4,32 +4,29 @@ const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 
-exports.gMeet = async function gMeet(context) {
-    let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(context.knex));
-    let meet = await ltiMeet.meetByClassId(context.requestBody.custom_canvas_course_id);
-    context.res
-        .status(301)
-        .setHeader('Location', meet.link);
-};
-
 exports.ltiHtmlPost = function(context) {
     context.res.setHeader('Content-Type', 'text/html');
-    return lti(context.knex, context.requestBody.custom_canvas_course_id);
+    return lti(context.knex, context.requestBody.custom_canvas_course_id, context);
 }
 
 exports.ltiHtmlGet = function(context) {
     context.res.setHeader('Content-Type', 'text/html');
-    return lti(context.knex, context.params.query.course_id);
+    return lti(context.knex, context.params.query.course_id, context);
 }
 
-async function lti(knex, context) {
+async function lti(knex, course_id, context) {
     let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
-    let meet = await ltiMeet.meetByClassId(course_id);
+    let meet = await ltiMeet.findMeetByClassId(course_id);
 
-
-    var source = fs.readFileSync(path.resolve(__dirname + "/../views/index.html")).toString();
-    var template = handlebars.compile(source);
-
+    if (meet) {
+        context.res
+            .status(301)
+            .setHeader('Location', meet.link);
+        return;
+    }
+    let pathStr = context.roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
+    let source = fs.readFileSync(path.resolve(__dirname + pathStr)).toString();
+    let template = handlebars.compile(source);
 
     return template(meet);
 }
