@@ -83,6 +83,24 @@ paths:
                 type: object
         "400":
           description: Class Code not specified
+  /oauthcallback:
+    get:
+      tags:
+      - developers
+      summary: oAuth redirects here
+      description: |
+        After a successful authorization, Google should redirect the user
+        to this endpoint. Furthermore, this endpoint will create the calendar
+        event, save it to the database and return the Google Meet link
+      operationId: oAuthCallback
+      x-exegesis-controller: authController
+      responses:
+        "301":
+          description: Redirect to Google Meet
+          content:
+            text/html:
+              schema:
+                type: object
   /ping:
     get:
       tags:

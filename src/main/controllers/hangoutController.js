@@ -22,9 +22,10 @@ exports.ltiHtmlGet = function(context) {
     return lti(context.knex, context.params.query.course_id);
 }
 
-async function lti(knex, course_id) {
+async function lti(knex, context) {
     let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
     let meet = await ltiMeet.meetByClassId(course_id);
+
 
     var source = fs.readFileSync(path.resolve(__dirname + "/../views/index.html")).toString();
     var template = handlebars.compile(source);

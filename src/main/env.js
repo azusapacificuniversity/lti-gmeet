@@ -2,6 +2,7 @@ require('dotenv').config();
 const util = require('util');
 const knex = require('./knex/conn.js');
 const GoogleCalendar = require('./classes/googleCalendar.js');
+const OAuth2Client = require('./auth.js');
 const StoreLookupRepo = require('./classes/storeLookup.js');
 const backend = process.env.BACKEND;
 
@@ -20,13 +21,21 @@ function createStoreRepo(_knex = createKnexConn(), _logger = console) {
     return new StoreLookupRepo(_knex, _logger);
 }
 
-function createGCal(_logger = console) {
-    return new GoogleCalendar(
-        process.env.GCAL_SERVICE_ACCOUNT,
-        JSON.parse(`"${process.env.GCAL_PRIVATE_KEY}"`),
-        process.env.GCAL_CALENDAR_USER,
-        process.env.GCAL_CALENDAR_ID,
+function createGCal(oAuth2Client=createOAuthClient(), _logger = console) {
+    return new GoogleCalendar(oAuth2Client, _logger);
+}
+
+function createOAuthClient(_logger = console) {
+    return new OAuth2Client(
+        process.env.GCAL_OAUTH_CLIENT_ID,
+        process.env.GCAL_OAUTH_CLIENT_SECRET,
+        createRedirectURL()
     );
+}
+
+function createRedirectURL() {
+    let hostname = process.env.HOSTNAME;
+    return `https://{{hostname}}/api/v1/oauthcallback`;
 }
 
 module.exports = {

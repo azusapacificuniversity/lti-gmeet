@@ -16,7 +16,6 @@
             text-align: center;
             text-decoration: none;
         }
-
         a {
             text-decoration: none;
         }
@@ -26,21 +25,17 @@
 <body>
     <h1>Google Meet</h1>
     <p>
-        <a type="button" onclick="window.open('{{link}}', '_blank')"><button class="btn-block">Go to Google Meet</button></a>
+        Your Google Meet has not been initialized yet.
+    </p>
+    <p>
+        Please click on the button below to authorize Canvas to access your APU
+        Google Calendar. Canvas will create a virtual event in your Calendar and
+        generate a Google Meet session for you to use in this Course.
+    </p>
+    <p>
+        <a type="button" target="_blank" href="{{link}}"><button class="btn-block">Go to Google Meet</button></a>
     </p>
 
-    <h4>Optionally:</h4>
-    <p>
-        <small>Use your phone to listen and speak to the video call. Your video joins here when your phone connects.</small>
-        <br />
-        On your phone, dial:
-        <br />
-        <em>{{phone}}</em>
-        <br />
-        Enter this PIN when prompted:
-        <br />
-        <em>{{verification_code}}</em>
-    </p>
 </body>
 
 </html>
