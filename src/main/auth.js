@@ -16,7 +16,7 @@ class Auth {
     }
 
     generateAuthUrl(state) {
-        return this.oauth2Client.generateAuthUrl({
+        return this.oAuth2Client.generateAuthUrl({
             scope: SCOPES,
             state: state
         });

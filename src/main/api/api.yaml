@@ -28,6 +28,14 @@ paths:
         explode: true
         schema:
           type: string
+      - name: roles
+        in: query
+        description: Canvas Course ID to get Google Meet for
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: search results matching criteria
