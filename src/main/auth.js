@@ -7,7 +7,7 @@ const SCOPES = [
 
 class Auth {
     constructor(client_id, client_secret, redirect_url) {
-        this.oAuth2Client = google.auth.OAuth2(
+        this.oAuth2Client = new google.auth.OAuth2(
             client_id,
             client_secret,
             redirect_url
