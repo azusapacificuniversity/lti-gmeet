@@ -9,7 +9,7 @@ all:
       git_source_secret: git-intdev-ssh
     git:
       uri: 'ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git'
-      branch: master
+      branch: bugfix/INTLMS-368-investigate-404-response-on-ios-devices
     database:
       db_type: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:db_type')}}"
       db_name: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:db_name')}}"
@@ -22,3 +22,5 @@ all:
         service_account: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:service_account')}}"
         calendar_id: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:calendar_id')}}"
         calendar_user: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:calendar_user')}}"
+        oauth_client_id: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:oauth_client_id')}}"
+        oauth_client_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:oauth_client_secret')}}"
