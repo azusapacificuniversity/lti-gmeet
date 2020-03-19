@@ -41,5 +41,6 @@ function createRedirectURL() {
 module.exports = {
     createStoreRepo,
     createGCal,
-    createKnexConn
+    createKnexConn,
+    createOAuthClient
 };
