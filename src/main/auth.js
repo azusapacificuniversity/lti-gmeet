@@ -12,7 +12,6 @@ class Auth {
             client_secret,
             redirect_url
         );
-        return this;
     }
 
     generateAuthUrl(state) {
