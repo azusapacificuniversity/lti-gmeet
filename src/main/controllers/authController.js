@@ -9,6 +9,7 @@ const LtiMeet = require('../classes/LtiMeet.js');
 exports.oAuthCallback = async function(context) {
     oAuth2Client = env.createOAuthClient();
     const { tokens } = await oAuth2Client.getToken(context.params.code);
+    console.log(tokens);
     oAuth2Client.setCredentials(tokens);
 
     let ltiMeet = new LtiMeet(env.createGCal(oAuth2Client), env.createStoreRepo(context.knex));
