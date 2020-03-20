@@ -29,13 +29,8 @@ function createOAuthClient(_logger = console) {
     return new OAuth2Client(
         process.env.GCAL_OAUTH_CLIENT_ID,
         process.env.GCAL_OAUTH_CLIENT_SECRET,
-        createRedirectURL()
+        process.env.GCAL_OAUTH_REDIRECT_URL
     );
-}
-
-function createRedirectURL() {
-    let hostname = '__hostname_to_be_changed_in_js__';
-    return `https://${hostname}/api/v1/oauthcallback`;
 }
 
 module.exports = {

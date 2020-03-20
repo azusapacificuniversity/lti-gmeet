@@ -24,3 +24,4 @@ all:
         calendar_user: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:calendar_user')}}"
         oauth_client_id: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:oauth_client_id')}}"
         oauth_client_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:oauth_client_secret')}}"
+        oauth_redirect_url: "https://google-meet-lti.apu.edu/api/v1/oauthcallback"
