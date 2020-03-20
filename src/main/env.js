@@ -37,5 +37,5 @@ module.exports = {
     createOAuthClient,
     createStoreRepo,
     createGCal,
-    createKnexConn,
+    createKnexConn
 };
