@@ -34,7 +34,7 @@ class LtiMeet {
     }
 
     async createMeet(classId) {
-        meet = await this.calendar.createEvent(classId);
+        let meet = await this.calendar.createEvent(classId);
         this.store.saveCourse(meet);
         return meet;
     }
