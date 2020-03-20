@@ -34,8 +34,8 @@ function createOAuthClient(_logger = console) {
 }
 
 function createRedirectURL() {
-    let hostname = process.env.HOSTNAME;
-    return `https://{{hostname}}/api/v1/oauthcallback`;
+    let hostname = '__hostname_to_be_changed_in_js__';
+    return `https://${hostname}/api/v1/oauthcallback`;
 }
 
 module.exports = {
