@@ -22,6 +22,7 @@ class Auth {
     }
 
     async getToken(code) {
+        console.log(code);
         return (await this.oAuth2Client.getToken(code));
     }
 
