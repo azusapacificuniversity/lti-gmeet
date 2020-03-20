@@ -37,6 +37,10 @@ class Auth {
     setCredentials(tokens) {
         this.oAuth2Client.setCredentials(tokens);
     }
+
+    getClient() {
+        return this.oAuth2Client;
+    }
 }
 
 

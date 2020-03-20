@@ -14,7 +14,7 @@ class GoogleCalendar {
         console.log(oAuth2Client);
         this.calendar = google.calendar({
             version: "v3",
-            auth: oAuth2Client
+            auth: oAuth2Client.getClient()
         });
 
         this.logger = _logger;
