@@ -22,10 +22,10 @@ class Auth {
     }
 
     async getToken(code) {
+        console.log(code);
         this.oAuth2Client.getToken(code, (err, tokens) => {
             if (err) {
                 console.error('Error getting oAuth tokens:');
-                console.log(code);
                 throw err;
             }
             this.oAuth2Client.credentials = tokens;
