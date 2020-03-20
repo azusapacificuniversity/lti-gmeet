@@ -110,7 +110,3 @@ paths:
             text/html:
               schema:
                 type: object
-components:
-  schemas:
-    Pong:
-      type: string
