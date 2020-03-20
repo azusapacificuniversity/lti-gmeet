@@ -11,7 +11,6 @@ class GoogleCalendar {
      * @param {String} cal_id, the Id of the Calendar where the events are stored
      */
     constructor(oAuth2Client, _logger = console) {
-        console.log(oAuth2Client);
         this.calendar = google.calendar({
             version: "v3",
             auth: oAuth2Client.getClient()
@@ -53,7 +52,6 @@ class GoogleCalendar {
      * @param {Object} canvas_course_id Course ID coming from POST Request of Canvas LTI
      */
     async createEvent(canvas_course_id) {
-        console.log("Saving " + canvas_course_id + " as an event");
         const today = new Date()
 
         let googleEvent = {

@@ -17,7 +17,6 @@ exports.ltiHtmlGet = function(context) {
 async function lti(knex, course_id, roles = 'student', context) {
     let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
     let meet = await ltiMeet.findMeetByClassId(course_id);
-    console.log(meet);
     if (meet) {
         return getView(__dirname + "/../views/meetReady.html", meet.link);
     }
