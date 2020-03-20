@@ -19,17 +19,17 @@ async function lti(knex, course_id, roles = 'student', context) {
     let meet = await ltiMeet.findMeetByClassId(course_id);
     console.log(meet);
     if (meet) {
-        context.res
-            .status(301)
-            .setHeader('Location', meet.link);
-        return;
+        return getView(__dirname + "/../views/meetReady.html", meet.link);
     }
-    console.log(env.createOAuthClient().generateAuthUrl(course_id));
     let pathStr = roles && roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
-    let source = fs.readFileSync(path.resolve(__dirname + pathStr)).toString();
+    return getView(__dirname + pathStr, env.createOAuthClient().generateAuthUrl(course_id));
+}
+
+function getView(_path, link) {
+    let source = fs.readFileSync(path.resolve(_path)).toString();
     let template = handlebars.compile(source);
     let data = {
-        link: env.createOAuthClient().generateAuthUrl(course_id)
+        link: link
     };
 
     return template(data);
