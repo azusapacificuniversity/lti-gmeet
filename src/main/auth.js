@@ -21,8 +21,6 @@ class Auth {
         });
     }
 
-    async getToken(client_id) {
-        return await this.oAuth2Client.getToken(client_id);
     async getToken(code) {
         return (await this.oAuth2Client.getToken(code));
     }
