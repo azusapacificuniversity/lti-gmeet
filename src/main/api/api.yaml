@@ -86,6 +86,23 @@ paths:
         event, save it to the database and return the Google Meet link
       operationId: oAuthCallback
       x-exegesis-controller: authController
+      parameters:
+      - name: code
+        in: query
+        description: Authorization code coming from Google
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: roles
+        in: state
+        description: State of the redirect from Google
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "301":
           description: Redirect to Google Meet
