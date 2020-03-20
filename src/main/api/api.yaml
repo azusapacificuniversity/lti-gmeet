@@ -95,8 +95,8 @@ paths:
         explode: true
         schema:
           type: string
-      - name: roles
-        in: state
+      - name: state
+        in: query
         description: State of the redirect from Google
         required: false
         style: form
