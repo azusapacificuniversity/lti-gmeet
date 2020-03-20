@@ -110,25 +110,6 @@ paths:
             text/html:
               schema:
                 type: object
-  /ping:
-    get:
-      tags:
-      - developers
-      summary: receive a pong response from the server
-      description: |
-        By going to the ping endpoint, the server
-        will send pong if the request is succesful
-      operationId: getPong
-      x-exegesis-controller: pingController
-      responses:
-        "200":
-          description: receive 'pong' from the server
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pong'
 components:
   schemas:
     Pong:
