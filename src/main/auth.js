@@ -27,6 +27,9 @@ class Auth {
         return (await this.oAuth2Client.getToken(code));
     }
 
+    setCredentials(tokens) {
+        this.oAuth2Client.setCredentials(tokens);
+    }
 }
 
 
