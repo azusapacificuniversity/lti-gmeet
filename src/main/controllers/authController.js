@@ -10,10 +10,10 @@ exports.oAuthCallback = async function(context) {
     oAuth2Client = env.createOAuthClient();
     await oAuth2Client.getToken(context.query.code);
     // console.log(tokens);
-    // oAuth2Client.setCredentials(tokens);
+    oAuth2Client.setCredentials(tokens);
 
     let ltiMeet = new LtiMeet(env.createGCal(oAuth2Client), env.createStoreRepo(context.knex));
-    let meet = await ltiMeet.meetByClassId(context.params.state);
+    let meet = await ltiMeet.createMeet(context.params.state);
 
     context.res
         .status(301)
