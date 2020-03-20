@@ -49,10 +49,11 @@ class GoogleCalendar {
 
     /**
      * Creates event from Canvas data to be used with Google Calendar API
-     * 
+     *
      * @param {Object} canvas_course_id Course ID coming from POST Request of Canvas LTI
      */
     async createEvent(canvas_course_id) {
+        console.log("Saving " + canvas_course_id + " as an event");
         const today = new Date()
 
         let googleEvent = {
