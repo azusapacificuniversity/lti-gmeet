@@ -21,7 +21,7 @@ function createStoreRepo(_knex = createKnexConn(), _logger = console) {
     return new StoreLookupRepo(_knex, _logger);
 }
 
-function createGCal(oAuth2Client=createOAuthClient(), _logger = console) {
+function createGCal(oAuth2Client = createOAuthClient(), _logger = console) {
     return new GoogleCalendar(oAuth2Client, _logger);
 }
 
