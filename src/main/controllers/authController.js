@@ -8,6 +8,7 @@ const LtiMeet = require('../classes/LtiMeet.js');
  */
 exports.oAuthCallback = async function(context) {
     oAuth2Client = env.createOAuthClient();
+    console.log(context);
     await oAuth2Client.getToken(context.params.code);
     // console.log(tokens);
     // oAuth2Client.setCredentials(tokens);
