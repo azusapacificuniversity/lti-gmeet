@@ -39,6 +39,7 @@ function createRedirectURL() {
 }
 
 module.exports = {
+    createOAuthClient,
     createStoreRepo,
     createGCal,
     createKnexConn,
