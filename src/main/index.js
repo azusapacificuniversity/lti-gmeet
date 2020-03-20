@@ -5,6 +5,7 @@ const env = require('./env.js');
 const exegesisExpress = require('exegesis-express');
 const exegesisContext = require('exegesis-plugin-context');
 const pathApi = 'api/api.yaml';
+const pathViews = 'views/views.yaml';
 const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
 const LtiMeet = require('./classes/LtiMeet.js');
@@ -21,11 +22,15 @@ async function startServer() {
         allowMissingControllers: false,
     };
 
-    const exegesisMiddleware = await exegesisExpress.middleware(
+    const exegesisApiMiddleware = await exegesisExpress.middleware(
         path.resolve(__dirname, pathApi),
         options
     );
-
+    console.log(path.resolve(__dirname, pathViews));
+    const exegesisViewsMiddleware = await exegesisExpress.middleware(
+        path.resolve(__dirname, pathViews),
+        options
+    );
     const app = express()
     const port = 3000
 
@@ -33,7 +38,8 @@ async function startServer() {
         extended: true
     }));
 
-    app.use('/api/v1', exegesisMiddleware);
+    app.use('/api/v1', exegesisApiMiddleware);
+    app.use(exegesisViewsMiddleware);
 
     app.get('/spec', (req, res) => {
         fs.readFile(path.resolve(__dirname + "/" + pathApi), function(err,
