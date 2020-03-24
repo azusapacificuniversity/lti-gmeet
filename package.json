@@ -4,6 +4,7 @@
   "description": "APU LTS Google Meet",
   "main": "src/main/index.js",
   "scripts": {
+    "start": "node ./src/main/index.js",
     "test": "./node_modules/.bin/cucumber-js"
   },
   "repository": {

@@ -49,10 +49,11 @@ paths:
     post:
       tags:
       - developers
-      summary: Display redirect button and a phone number
+      summary: Redirect the user to the appropriate Google Meet URL, if a URL exists
       description: |
-        By passing in the appropriate options, you can search for
-        appropriate persons within the ldap database
+        Redirects the user to the Google Meet, if the Google Meet has been created,
+        otherwise an HTML file is sent explaining to the user the Google event has
+        not been created yet
       x-exegesis-controller: hangoutController
       operationId: ltiHtmlPost
       requestBody:
