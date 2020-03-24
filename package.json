@@ -4,6 +4,7 @@
   "description": "APU LTS Google Meet",
   "main": "src/main/index.js",
   "scripts": {
+    "start": "node ./src/main/index.js",
     "test": "./node_modules/.bin/cucumber-js"
   },
   "repository": {
@@ -24,8 +25,10 @@
     "exegesis-plugin-context": "^1.0.2",
     "express": "^4.17.1",
     "googleapis": "^48.0.0",
+    "handlebars": "^4.7.3",
     "knex": "^0.20.8",
     "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
     "uuid": "^7.0.0"
   },
   "devDependencies": {

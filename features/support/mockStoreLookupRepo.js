@@ -8,7 +8,7 @@ class mockStoreLookupRepo {
     }
 
     async findByClassId(classId) {
-        return this.arr.find(event => event.summary === classId);
+        return this.arr.find(event => event.class_id == classId);
     }
 }
 

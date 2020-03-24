@@ -1,6 +1,7 @@
 const { google } = require("googleapis");
-var crypto = require('crypto');
-const SCOPES = ["https://www.googleapis.com/auth/calendar"];
+const crypto = require('crypto');
+const CALENDAR_ID='primary';
+
 
 class GoogleCalendar {
     /**
@@ -9,21 +10,13 @@ class GoogleCalendar {
      * @param {String} cal_user APU email, the user to whon the calendar belongs
      * @param {String} cal_id, the Id of the Calendar where the events are stored
      */
-    constructor(service_account, private_key, cal_user, cal_id) {
-        this.jwtClient = new google.auth.JWT(
-            service_account,
-            null,
-            private_key,
-            SCOPES,
-            cal_user
-        );
-
+    constructor(oAuth2Client, _logger = console) {
         this.calendar = google.calendar({
             version: "v3",
-            auth: this.jwtClient
+            auth: oAuth2Client.getClient()
         });
 
-        this.calendarId = cal_id;
+        this.logger = _logger;
     }
 
     /**
@@ -35,11 +28,10 @@ class GoogleCalendar {
      *  - pin
      * 
      * @param {Object} event Event to be saved into Google Calendar
-     * @param {String} calendarId Id of calendar where events will be stored
      */
-    async saveEvent(event, calendarId) {
+    async saveEvent(event) {
         return await this.calendar.events.insert({
-            calendarId: calendarId,
+            calendarId: CALENDAR_ID,
             resource: event,
             conferenceDataVersion: 1
         }).then(event => {
@@ -49,12 +41,14 @@ class GoogleCalendar {
                 phone: event.data.conferenceData.entryPoints[1].uri,
                 verification_code: event.data.conferenceData.entryPoints[1].pin
             }
-        }).catch(err => { throw err });
+        }).catch(err => {
+            throw err
+        });
     }
 
     /**
      * Creates event from Canvas data to be used with Google Calendar API
-     * 
+     *
      * @param {Object} canvas_course_id Course ID coming from POST Request of Canvas LTI
      */
     async createEvent(canvas_course_id) {
@@ -79,17 +73,19 @@ class GoogleCalendar {
             visibility: "public"
         }
 
-        let ltiEvent = await this.saveEvent(googleEvent, this.calendarId)
-            .catch(err => { throw err;})
+        let ltiEvent = await this.saveEvent(googleEvent)
+            .catch(err => {
+                throw err;
+            })
 
         return ltiEvent;
     }
 
     randomValueHex(len) {
-      return crypto
-        .randomBytes(Math.ceil(len / 2))
-        .toString('hex') // convert to hexadecimal format
-        .slice(0, len) // return required number of characters
+        return crypto
+            .randomBytes(Math.ceil(len / 2))
+            .toString('hex') // convert to hexadecimal format
+            .slice(0, len) // return required number of characters
     }
 }
 
