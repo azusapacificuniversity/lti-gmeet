@@ -6,29 +6,33 @@ const VIEWS = {
     'authorize': __dirname + "/../views/partials/authorize.hbs",
     'not_ready': __dirname + "/../views/partials/notReady.hbs",
 };
+const BASE = "./../views/layouts/base.hbs";
 
 class Views {
     constructor() {
         this.compiled = {};
+        handlebars.registerPartial('layout/base', this._compileTemplate(BASE));
     }
 
     getView(name, data) {
         if (!Object.keys(this.compiled).includes(name))
             throw new Error(`Requested view ${name} does NOT exist.`);
 
-        let template = this._getCompiledTemplate(name);
+        let template = this._getTemplate(name);
         return template(data);
     }
 
-    _getCompiledTemplate(tmplName) {
+    _getTemplate(tmplName) {
         if (Object.keys(this.compiled).includes(tmplName))
             return this.compiled[tmplName];
 
         let _path = VIEWS[tmplName];
-        let source = fs.readFileSync(path.resolve(_path)).toString();
-        let template = handlebars.compile(source);
+        return this.compiled[tmplName] = this._compileTemplate(_path);
+    }
 
-        return this.compiled[tmplName] = template;
+    _compileTemplate(_path) {
+        let source = fs.readFileSync(path.resolve(_path)).toString();
+        return handlebars.compile(source);
     }
 }
 
