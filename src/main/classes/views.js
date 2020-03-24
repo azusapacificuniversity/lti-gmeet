@@ -3,19 +3,19 @@ const fs = require('fs');
 const path = require('path');
 
 const VIEWS = {
-    'authorize': __dirname + "/../views/partials/authorize.hbs",
-    'not_ready': __dirname + "/../views/partials/notReady.hbs",
+    'authorize': __dirname + "/../views/pages/authorize.hbs",
+    'not_ready': __dirname + "/../views/pages/notReady.hbs",
 };
 const BASE = __dirname + "/../views/layouts/base.hbs";
 
 class Views {
     constructor() {
         this.compiled = {};
-        handlebars.registerPartial('layout/base', this._compileTemplate(BASE));
+        handlebars.registerPartial('layouts/base', this._compileTemplate(BASE));
     }
 
     getView(name, data) {
-        if (!Object.keys(this.compiled).includes(name))
+        if (!Object.keys(VIEWS).includes(name))
             throw new Error(`Requested view ${name} does NOT exist.`);
 
         let template = this._getTemplate(name);
