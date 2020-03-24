@@ -18,7 +18,9 @@ async function lti(knex, course_id, roles = 'student', context) {
     let ltiMeet = new LtiMeet(env.createGCal(), env.createStoreRepo(knex));
     let meet = await ltiMeet.findMeetByClassId(course_id);
     if (meet) {
-        return getView(__dirname + "/../views/meetReady.html", meet.link);
+        context.res
+            .status(308)
+            .setHeader('Location', meet.link);
     }
     let pathStr = roles && roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
     return getView(__dirname + pathStr, env.createOAuthClient().generateAuthUrl(course_id));
