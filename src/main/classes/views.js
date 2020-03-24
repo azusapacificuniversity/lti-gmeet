@@ -6,7 +6,7 @@ const VIEWS = {
     'authorize': __dirname + "/../views/partials/authorize.hbs",
     'not_ready': __dirname + "/../views/partials/notReady.hbs",
 };
-const BASE = "./../views/layouts/base.hbs";
+const BASE = __dirname + "/../views/layouts/base.hbs";
 
 class Views {
     constructor() {
