@@ -19,7 +19,7 @@ async function lti(knex, course_id, roles = 'student', context) {
     let meet = await ltiMeet.findMeetByClassId(course_id);
     if (meet) {
         context.res
-            .status(308)
+            .status(302)
             .setHeader('Location', meet.link);
     }
     let pathStr = roles && roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
