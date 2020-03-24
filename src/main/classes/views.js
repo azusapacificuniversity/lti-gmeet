@@ -13,16 +13,16 @@ class Views {
     }
 
     getView(name, data) {
-        // if (!Object.keys(this.compiled).includes(name))
-        //     throw new Error(`Requested view ${name} does NOT exist.`);
+        if (!Object.keys(this.compiled).includes(name))
+            throw new Error(`Requested view ${name} does NOT exist.`);
 
         let template = this._getCompiledTemplate(name);
         return template(data);
     }
 
     _getCompiledTemplate(tmplName) {
-        // if (Object.keys(this.compiled).includes(tmplName))
-        //     return this.compiled[tmplName];
+        if (Object.keys(this.compiled).includes(tmplName))
+            return this.compiled[tmplName];
 
         let _path = VIEWS[tmplName];
         let source = fs.readFileSync(path.resolve(_path)).toString();
