@@ -1,8 +1,10 @@
 const handlebars = require('handlebars');
+const fs = require('fs');
+const path = require('path');
 
 const VIEWS = {
-    'authorize': "./../views/partials/authorize.hbs",
-    'not_ready': "./../views/partials/notReady.hbs",
+    'authorize': __dirname + "/../views/partials/authorize.hbs",
+    'not_ready': __dirname + "/../views/partials/notReady.hbs",
 };
 
 class Views {
@@ -11,16 +13,16 @@ class Views {
     }
 
     getView(name, data) {
-        if (!compiled.keys.includes(tmplName))
-            throw new Error(`Requested view ${name} does NOT exist.`);
+        // if (!Object.keys(this.compiled).includes(name))
+        //     throw new Error(`Requested view ${name} does NOT exist.`);
 
         let template = this._getCompiledTemplate(name);
         return template(data);
     }
 
     _getCompiledTemplate(tmplName) {
-        if (this.compiled.keys.includes(tmplName))
-            return this.compiled[tmplName];
+        // if (Object.keys(this.compiled).includes(tmplName))
+        //     return this.compiled[tmplName];
 
         let _path = VIEWS[tmplName];
         let source = fs.readFileSync(path.resolve(_path)).toString();
