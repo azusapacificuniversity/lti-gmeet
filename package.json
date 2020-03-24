@@ -26,6 +26,7 @@
     "express": "^4.17.1",
     "googleapis": "^48.0.0",
     "handlebars": "^4.7.3",
+    "js-yaml": "^3.13.1",
     "knex": "^0.20.8",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
