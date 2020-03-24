@@ -26,7 +26,7 @@ async function startServer() {
         path.resolve(__dirname, pathApi),
         options
     );
-    console.log(path.resolve(__dirname, pathViews));
+
     const exegesisViewsMiddleware = await exegesisExpress.middleware(
         path.resolve(__dirname, pathViews),
         options
