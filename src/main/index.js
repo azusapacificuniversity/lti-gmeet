@@ -12,6 +12,7 @@ const LtiMeet = require('./classes/LtiMeet.js');
 
 const knex = env.createKnexConn()
 const views = new Views();
+const yaml = require('js-yaml');
 
 async function startServer() {
     const options = {
@@ -62,4 +63,35 @@ async function startServer() {
     app.listen(port, () => console.log(`Google Meet LTI app listening on port ${port}!`))
 }
 
+async function readYaml() {
+    try {
+        let file = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + "/" + pathApi), 'utf8'));
+        let obj = file.paths;
+        Object.keys(obj).forEach(function(key) {
+            let path = obj[key];
+            let methods = Object.keys(path);
+            for (let i = 0; i < methods.length; i++) {
+                let method = methods[i];
+                let endpoint = obj[key][methods[i]];
+                let description = endpoint.description;
+                let summary = endpoint.summary;
+                if (endpoint.parameters) {
+                    let params = endpoint.parameters;
+                    for (let j = 0; j < params.length; j++) {
+                        let param_name = params[j].name;
+                        let param_desc = params[j].description;
+                    }
+                }
+                let responses = endpoint.responses;
+                let codes = Object.keys(responses);
+                for (let k = 0; k < codes.length; k++){
+                    let code = codes[k];
+                    let code_desc = responses[code].description;
+                }
+            }
+        });
+    } catch (err) { throw err; }
+}
+
 startServer();
+readYaml();
