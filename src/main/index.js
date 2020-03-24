@@ -38,6 +38,7 @@ async function startServer() {
         extended: true
     }));
 
+    app.use(express.static(path.resolve(__dirname + '/static')));
     app.use('/api/v1', exegesisApiMiddleware);
     app.use(exegesisViewsMiddleware);
 
