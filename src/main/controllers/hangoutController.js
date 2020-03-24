@@ -2,7 +2,6 @@ const env = require("../env.js");
 const LtiMeet = require('../classes/LtiMeet.js');
 const fs = require('fs');
 const path = require('path');
-const handlebars = require('handlebars');
 
 exports.ltiHtmlPost = function(context) {
     context.res.setHeader('Content-Type', 'text/html');
@@ -22,16 +21,9 @@ async function lti(knex, course_id, roles = 'student', context) {
             .status(302)
             .setHeader('Location', meet.link);
     }
-    let pathStr = roles && roles.includes('Instructor') ? "/../views/authorize.html" : "/../views/notReady.html";
-    return getView(__dirname + pathStr, env.createOAuthClient().generateAuthUrl(course_id));
-}
 
-function getView(_path, link) {
-    let source = fs.readFileSync(path.resolve(_path)).toString();
-    let template = handlebars.compile(source);
-    let data = {
-        link: link
-    };
-
-    return template(data);
+    let view = roles && roles.includes('Instructor') ? "authorize" : "not_ready";
+    return context.extraContext.views.getView(view, {
+        link: env.createOAuthClient().generateAuthUrl(course_id)
+    });
 }

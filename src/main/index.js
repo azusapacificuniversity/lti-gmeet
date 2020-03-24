@@ -7,15 +7,18 @@ const exegesisContext = require('exegesis-plugin-context');
 const pathApi = 'api/api.yaml';
 const pathViews = 'views/views.yaml';
 const bodyParser = require('body-parser');
-const handlebars = require('handlebars');
+const Views = require('./classes/views.js');
 const LtiMeet = require('./classes/LtiMeet.js');
+
 const knex = env.createKnexConn()
+const views = new Views();
 
 async function startServer() {
     const options = {
         plugins: [
             exegesisContext({
-                knex: knex
+                knex: knex,
+                views: views
             })
         ],
         controllers: path.resolve(__dirname, './controllers'),
