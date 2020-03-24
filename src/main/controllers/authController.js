@@ -17,6 +17,6 @@ exports.oAuthCallback = async function(context) {
     let meet = await ltiMeet.createMeet(context.params.query.state);
 
     context.res
-        .status(301)
+        .status(302)
         .setHeader('Location', meet.link);
 };
