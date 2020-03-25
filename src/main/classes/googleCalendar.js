@@ -1,6 +1,10 @@
 const { google } = require("googleapis");
 const crypto = require('crypto');
-const CALENDAR_ID='primary';
+
+const CALENDAR_ID = 'primary';
+const HOUR_IN_MS = 1 * 60 * 60 * 1000;
+const DT_START = new Date(0); // 1970-01-01T00:00:00.000Z
+const DT_END = new Date(HOUR_IN_MS); // 1970-01-01T01:00:00.000Z
 
 
 class GoogleCalendar {
@@ -52,25 +56,20 @@ class GoogleCalendar {
      * @param {Object} canvas_course_id Course ID coming from POST Request of Canvas LTI
      */
     async createEvent(canvas_course_id) {
-        const today = new Date()
-
         let googleEvent = {
             summary: canvas_course_id,
             description: canvas_course_id,
             start: {
-                dateTime: today.toISOString(),
-                timeZone: "America/Los_Angeles"
+                dateTime: DT_START
             },
             end: {
-                dateTime: today.toISOString(),
-                timeZone: "America/Los_Angeles"
+                dateTime: DT_END
             },
             conferenceData: {
                 createRequest: {
                     requestId: this.randomValueHex(12)
                 }
-            },
-            visibility: "public"
+            }
         }
 
         let ltiEvent = await this.saveEvent(googleEvent)
