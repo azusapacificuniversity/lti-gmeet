@@ -72,7 +72,7 @@ for (let i = 0; i < filePaths.length; i++) {
             file: path.basename(filePaths[i]),
             specs: readYaml(yaml.safeLoad(fs.readFileSync(filePaths[i], 'utf8')))
         };
-        console.logs(json_specs);
+        console.log(json_specs);
     } catch (err) { throw err; }
 }
 
