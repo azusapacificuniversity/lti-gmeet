@@ -69,8 +69,7 @@ class GoogleCalendar {
                 createRequest: {
                     requestId: this.randomValueHex(12)
                 }
-            },
-            visibility: "public"
+            }
         }
 
         let ltiEvent = await this.saveEvent(googleEvent)
