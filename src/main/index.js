@@ -63,35 +63,64 @@ async function startServer() {
     app.listen(port, () => console.log(`Google Meet LTI app listening on port ${port}!`))
 }
 
-async function readYaml() {
+startServer();
+
+
+// Read and Parse YAML files
+const filePaths = process.argv.slice(2);
+
+for (let i = 0; i < filePaths.length; i++) {
     try {
-        let file = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + "/" + pathApi), 'utf8'));
-        let obj = file.paths;
-        Object.keys(obj).forEach(function(key) {
-            let path = obj[key];
-            let methods = Object.keys(path);
-            for (let i = 0; i < methods.length; i++) {
-                let method = methods[i];
-                let endpoint = obj[key][methods[i]];
-                let description = endpoint.description;
-                let summary = endpoint.summary;
-                if (endpoint.parameters) {
-                    let params = endpoint.parameters;
-                    for (let j = 0; j < params.length; j++) {
-                        let param_name = params[j].name;
-                        let param_desc = params[j].description;
-                    }
-                }
-                let responses = endpoint.responses;
-                let codes = Object.keys(responses);
-                for (let k = 0; k < codes.length; k++){
-                    let code = codes[k];
-                    let code_desc = responses[code].description;
-                }
-            }
-        });
+        let json_specs = {
+            file: path.basename(filePaths[i]),
+            specs: readYaml(yaml.safeLoad(fs.readFileSync(filePaths[i], 'utf8')))
+        };
+        console.logs(json_specs);
     } catch (err) { throw err; }
 }
 
-startServer();
-readYaml();
+function readYaml(file) {
+    let obj = file.paths;
+    let specs = [];
+    Object.keys(obj).forEach(function(key) {
+        let path = key;
+        let methods = Object.keys(obj[key]);
+        for (let i = 0; i < methods.length; i++) {
+            let endpoint = obj[key][methods[i]];
+            let parameters = [];
+            if (endpoint.parameters) {
+                for (let j = 0; j < endpoint.parameters.length; j++) {
+                    parameters.push({
+                        param: endpoint.parameters[j].name,
+                        description: endpoint.parameters[j].description,
+                        required: endpoint.parameters[j].required,
+                        data_type: endpoint.parameters[j].schema.type
+                    })
+                }
+            }
+            let codes = Object.keys(endpoint.responses);
+            let responses = [];
+            for (let k = 0; k < codes.length; k++){
+                responses.push({
+                    code: codes[k],
+                    description: endpoint.responses[codes[k]].description
+                })
+            }
+            specs.push({
+                path: path,
+                method: methods[i],
+                description: formatString(endpoint.description),
+                summary: formatString(endpoint.summary),
+                parameters: endpoint.parameters ? parameters : "none",
+                responses: responses
+            });
+        }
+    });
+    return specs;
+}
+
+function formatString(string) {
+    formatted_string = string.replace(/(\r\n|\n|\r)/gm," ");
+    last_char = formatted_string.length - 1;
+    return formatted_string[last_char] == ' ' ? formatted_string.substring(0, last_char) : formatted_string;
+}
