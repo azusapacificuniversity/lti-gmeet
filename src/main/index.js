@@ -66,16 +66,18 @@ startServer();
 // Read and Parse YAML files
 const filePaths = process.argv.slice(2);
 
+// Loop through YAML files
 for (let i = 0; i < filePaths.length; i++) {
     try {
         let json_specs = {
             file: path.basename(filePaths[i]),
-            specs: readYaml(yaml.safeLoad(fs.readFileSync(filePaths[i], 'utf8')))
+            specs: parseYAML(yaml.safeLoad(fs.readFileSync(filePaths[i], 'utf8')))
         };
     } catch (err) { throw err; }
 }
 
-function readYaml(file) {
+// Parse YAML file
+function parseYAML(file) {
     let obj = file.paths;
     let specs = [];
     Object.keys(obj).forEach(function(key) {
@@ -126,6 +128,7 @@ function readYaml(file) {
     return specs;
 }
 
+// Format String
 function formatString(string) {
     formatted_string = string.replace(/(\r\n|\n|\r)/gm," ");
     last_char = formatted_string.length - 1;
