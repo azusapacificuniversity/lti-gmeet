@@ -65,7 +65,7 @@ startServer();
 
 // Read and Parse YAML files
 const filePaths = process.argv.slice(2);
-console.log("# ENDPOINTS")
+
 for (let i = 0; i < filePaths.length; i++) {
     try {
         let json_specs = {
@@ -80,15 +80,20 @@ function readYaml(file) {
     let specs = [];
     Object.keys(obj).forEach(function(key) {
         let path = key;
-        console.log("## " + path);
         let methods = Object.keys(obj[key]);
         for (let i = 0; i < methods.length; i++) {
             let endpoint = obj[key][methods[i]];
-            console.log("### Description: " + formatString(endpoint.description));
-            console.log("### Summary: " + formatString(endpoint.summary));
+            console.log("## " + path + " - " + methods[i].toUpperCase() + "\n");
+            console.log("Summary: " + formatString(endpoint.summary));
+            console.log("Description: " + formatString(endpoint.description));
             let parameters = [];
+            console.log("#### Parameters");
             if (endpoint.parameters) {
                 for (let j = 0; j < endpoint.parameters.length; j++) {
+                console.log("##### " + endpoint.parameters[j].name);
+                console.log("Description: " + endpoint.parameters[j].description);
+                console.log("Required: " + endpoint.parameters[j].required);
+                console.log("Data Type: " + endpoint.parameters[j].schema.type);
                     parameters.push({
                         param: endpoint.parameters[j].name,
                         description: endpoint.parameters[j].description,
@@ -96,10 +101,13 @@ function readYaml(file) {
                         data_type: endpoint.parameters[j].schema.type
                     })
                 }
-            }
+            } else { console.log("None"); }
             let codes = Object.keys(endpoint.responses);
             let responses = [];
+            console.log("#### Responses");
             for (let k = 0; k < codes.length; k++){
+                console.log("**Status Code: " + codes[k] + "**");
+                console.log("Description: " + endpoint.responses[codes[k]].description);
                 responses.push({
                     code: codes[k],
                     description: endpoint.responses[codes[k]].description
