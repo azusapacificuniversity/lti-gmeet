@@ -11,7 +11,10 @@ const Views = require('./classes/views.js');
 const LtiMeet = require('./classes/LtiMeet.js');
 
 const knex = env.createKnexConn()
+<<<<<<< HEAD
 const views = new Views();
+=======
+>>>>>>> aabcd07fd8dedbc6cb0200b8ae2925be0571347a
 const yaml = require('js-yaml');
 
 async function startServer() {
