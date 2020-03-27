@@ -7,6 +7,12 @@ const LtiMeet = require('../classes/LtiMeet.js');
  * after a user successfully authorizes the oAuth scopes on his resouces
  */
 exports.oAuthCallback = async function(context) {
+    //Authenticate user
+    if (!context.req.session.course_id) {
+        context.res.status(401);
+        return;
+    }
+
     oAuth2Client = env.createOAuthClient();
     const {
         tokens
