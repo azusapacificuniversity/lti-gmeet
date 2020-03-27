@@ -12,7 +12,9 @@ for (let i = 0; i < filePaths.length; i++) {
             file: path.basename(filePaths[i]),
             specs: parseYAML(yaml.safeLoad(fs.readFileSync(filePaths[i], 'utf8')))
         };
-    } catch (err) { throw err; }
+    } catch (err) {
+        throw err;
+    }
 }
 
 // Parse YAML file
@@ -31,10 +33,10 @@ function parseYAML(file) {
             console.log("#### Parameters");
             if (endpoint.parameters) {
                 for (let j = 0; j < endpoint.parameters.length; j++) {
-                console.log("##### " + endpoint.parameters[j].name);
-                console.log("Description: " + endpoint.parameters[j].description);
-                console.log("Required: " + endpoint.parameters[j].required);
-                console.log("Data Type: " + endpoint.parameters[j].schema.type);
+                    console.log("##### " + endpoint.parameters[j].name);
+                    console.log("Description: " + endpoint.parameters[j].description);
+                    console.log("Required: " + endpoint.parameters[j].required);
+                    console.log("Data Type: " + endpoint.parameters[j].schema.type);
                     parameters.push({
                         param: endpoint.parameters[j].name,
                         description: endpoint.parameters[j].description,
@@ -42,11 +44,13 @@ function parseYAML(file) {
                         data_type: endpoint.parameters[j].schema.type
                     })
                 }
-            } else { console.log("None"); }
+            } else {
+                console.log("None");
+            }
             let codes = Object.keys(endpoint.responses);
             let responses = [];
             console.log("#### Responses");
-            for (let k = 0; k < codes.length; k++){
+            for (let k = 0; k < codes.length; k++) {
                 console.log("**Status Code: " + codes[k] + "**");
                 console.log("Description: " + endpoint.responses[codes[k]].description);
                 responses.push({
@@ -69,7 +73,7 @@ function parseYAML(file) {
 
 // Format String
 function formatString(string) {
-    formatted_string = string.replace(/(\r\n|\n|\r)/gm," ");
+    formatted_string = string.replace(/(\r\n|\n|\r)/gm, " ");
     last_char = formatted_string.length - 1;
     return formatted_string[last_char] == ' ' ? formatted_string.substring(0, last_char) : formatted_string;
 }
