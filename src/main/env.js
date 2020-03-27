@@ -1,4 +1,5 @@
 require('dotenv').config();
+const oAuth1Sign = require('./classes/oauth1sign.js');
 const util = require('util');
 const knex = require('./knex/conn.js');
 const GoogleCalendar = require('./classes/googleCalendar.js');
@@ -15,6 +16,10 @@ function createKnexConn(_logger = console) {
         process.env.DB_PASS,
         _logger
     );
+}
+
+function createOAuth1Sign() {
+    return new oAuth1Sign(process.env.HOSTNAME, process.env.OAUTH_CONSUMER_KEY, process.env.OAUTH_CONSUMER_SECRET);
 }
 
 function createStoreRepo(_knex = createKnexConn(), _logger = console) {
@@ -37,5 +42,6 @@ module.exports = {
     createOAuthClient,
     createStoreRepo,
     createGCal,
-    createKnexConn
+    createKnexConn,
+    createOAuth1Sign
 };

@@ -18,7 +18,8 @@ async function startServer() {
         plugins: [
             exegesisContext({
                 knex: knex,
-                views: views
+                views: views,
+                oAuth1Sign: oAuth1Sign
             })
         ],
         controllers: path.resolve(__dirname, './controllers'),
