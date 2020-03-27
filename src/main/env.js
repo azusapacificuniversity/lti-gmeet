@@ -19,7 +19,11 @@ function createKnexConn(_logger = console) {
 }
 
 function createOAuth1Sign() {
-    return new oAuth1Sign(process.env.HOSTNAME, process.env.OAUTH_CONSUMER_KEY, process.env.OAUTH_CONSUMER_SECRET);
+    return new oAuth1Sign(
+        process.env.HOSTNAME,
+        process.env.OAUTH_CONSUMER_KEY,
+        process.env.OAUTH_CONSUMER_SECRET
+    );
 }
 
 function createStoreRepo(_knex = createKnexConn(), _logger = console) {
