@@ -4,7 +4,7 @@ metadata:
   name: lti-googlemeet
   namespace: "{{ openshift.project }}"
 spec:
-  host: "{{ hostname }}"
+  host: "{{ app.hostname }}"
   to:
     kind: Service
     name: lti-googlemeet
@@ -12,4 +12,3 @@ spec:
     targetPort: 3000-tcp
   tls:
     termination: edge
-
