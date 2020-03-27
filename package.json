@@ -29,6 +29,7 @@
     "knex": "^0.20.8",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
+    "oauth-signature": "^1.5.0",
     "uuid": "^7.0.0"
   },
   "devDependencies": {

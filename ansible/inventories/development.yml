@@ -3,7 +3,10 @@ all:
     localhost
   vars:
     env: DEV
-    hostname: lti-googlemeet-intdev.cloudapps.sysdev.ose.apu.edu
+    app:
+      hostname: lti-googlemeet-intdev.cloudapps.sysdev.ose.apu.edu
+      oauth_consumer_key: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/dev:oauth_consumer_key')}}"
+      oauth_consumer_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/dev:oauth_consumer_secret')}}"
     openshift:
       project: intdev
       git_source_secret: git-intdev-ssh

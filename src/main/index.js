@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const env = require('./env.js');
@@ -10,15 +10,17 @@ const bodyParser = require('body-parser');
 const Views = require('./classes/views.js');
 const LtiMeet = require('./classes/LtiMeet.js');
 
-const knex = env.createKnexConn()
+const knex = env.createKnexConn();
 const views = new Views();
+const oAuth1Sign = env.createOAuth1Sign();
 
 async function startServer() {
     const options = {
         plugins: [
             exegesisContext({
                 knex: knex,
-                views: views
+                views: views,
+                oAuth1Sign: oAuth1Sign
             })
         ],
         controllers: path.resolve(__dirname, './controllers'),
@@ -50,7 +52,7 @@ async function startServer() {
             data) {
             res.setHeader('Content-type', 'text/plain');
             res.send(data);
-        })
+        });
     });
 
     app.use((req, res) => {
