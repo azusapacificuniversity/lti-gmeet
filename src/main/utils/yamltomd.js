@@ -1,9 +1,11 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
+const findYamlFiles = require('./findYamlFiles.js');
+const ProjRoot = path.resolve(__dirname + "../../../");
 
 // Read and Parse YAML files
-const filePaths = process.argv.slice(2);
+const filePaths = findYamlFiles(ProjRoot);
 
 // Loop through YAML files
 for (let i = 0; i < filePaths.length; i++) {
