@@ -37,6 +37,6 @@ async function lti(knex, course_id, roles = 'student', context) {
     let allowedRoles = ['Instructor', 'Administrator'];
     let view = roles && allowedRoles.some(r => roles.includes(r)) ? "authorize" : "not_ready";
     return context.extraContext.views.getView(view, {
-        link: env.createOAuthClient().generateAuthUrl(course_id)
+        link: env.createOAuthClient().generateAuthUrl()
     });
 }
