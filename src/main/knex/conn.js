@@ -11,6 +11,7 @@ class KnexConnection {
                 password: _pwd,
                 database: _db
             },
+            pool: { min: 0, max: 7 },
             log: _logger
         });
     }
