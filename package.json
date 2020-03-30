@@ -19,7 +19,6 @@
   "author": "Azusa Pacific University",
   "license": "SEE LICENSE IN README.md",
   "dependencies": {
-    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "exegesis-express": "^2.0.0",
