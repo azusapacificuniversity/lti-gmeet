@@ -18,10 +18,8 @@ const MySQLoptions = {
     }
 };
 
-const sessionSecret = process.env.SESSION_SECRET;
-
 module.exports = expressSess({
-    secret: sessionSecret,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: new MySQLStore(MySQLoptions),
