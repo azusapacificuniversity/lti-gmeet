@@ -24,6 +24,8 @@
     "exegesis-express": "^2.0.0",
     "exegesis-plugin-context": "^1.0.2",
     "express": "^4.17.1",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.0",
     "googleapis": "^48.0.0",
     "handlebars": "^4.7.3",
     "knex": "^0.20.8",

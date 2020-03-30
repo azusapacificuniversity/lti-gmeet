@@ -36,8 +36,11 @@ async function startServer() {
         path.resolve(__dirname, pathViews),
         options
     );
-    const app = express()
-    const port = 3000
+    const app = express();
+    const port = 3000;
+
+    app.set('trust proxy', true);
+    app.use(require('./session.js'));
 
     app.use(bodyParser.urlencoded({
         extended: true

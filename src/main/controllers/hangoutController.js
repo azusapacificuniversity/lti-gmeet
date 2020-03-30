@@ -32,9 +32,19 @@ async function lti(knex, course_id, roles = 'student', context) {
         return;
     }
 
-    // Create and return existing Google Meet
-    let allowedRoles = ['Instructor', 'Administrator'];
-    let view = roles && allowedRoles.some(r => roles.includes(r)) ? "authorize" : "not_ready";
+    // Show Authorization page, if Instructor or Administrator
+    if (!Array.isArray(context.req.session.courses)) {
+        context.req.session.courses = [];
+    }
+
+    let courses = context.req.session.courses;
+    const allowedRoles = ['Instructor', 'Administrator'];
+    const allowAuth = (roles && allowedRoles.some(r => roles.includes(r)));
+
+    if (courses.indexOf(course_id) === -1 && allowAuth)
+        courses.push(course_id);
+
+    let view = allowAuth ? "authorize" : "not_ready";
     return context.extraContext.views.getView(view, {
         link: env.createOAuthClient().generateAuthUrl(course_id)
     });
