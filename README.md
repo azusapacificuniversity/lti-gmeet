@@ -102,3 +102,13 @@ Redirects the user to the appropriate Google Meet URL, if a URL exists in the da
 #### /api/v1/oauthcallback - GET
 
 After a successful oAuth, Google redirects the user to this endpoint and, a Google Calendar event will be created on the users calendar, then returns a `301`
+
+## How to generate a markdown from the yaml files
+
+In your Terminal or Command Prompt, run the following at the root of the project directory:
+
+```
+$ node src/main/utils/yamlToMD.js
+```
+
+This command looks for all YAML OpenAPI files within the project and prints to the console the endpoints in a markdown format, which you can then copy/paste to your own markdown file.
