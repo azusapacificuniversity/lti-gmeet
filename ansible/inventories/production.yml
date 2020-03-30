@@ -1,0 +1,30 @@
+all:
+  hosts:
+    localhost
+  vars:
+    env: PROD
+    app:
+      hostname: google-meet-lti.apu.edu
+      oauth_consumer_key: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/prod:oauth_consumer_key')}}"
+      oauth_consumer_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/prod:oauth_consumer_secret')}}"
+    openshift:
+      project: intdev
+      git_source_secret: git-intdev-ssh
+    git:
+      uri: 'ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git'
+      branch: master
+    database:
+      db_type: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:db_type')}}"
+      db_name: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:db_name')}}"
+      hostname: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:hostname')}}"
+      username: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:username')}}"
+      password: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/prod:password')}}"
+    google:
+      calendar:
+        private_key: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:private_key')}}"
+        service_account: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:service_account')}}"
+        calendar_id: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:calendar_id')}}"
+        calendar_user: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:calendar_user')}}"
+        oauth_client_id: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:oauth_client_id')}}"
+        oauth_client_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/google-cal-api/prod:oauth_client_secret')}}"
+        oauth_redirect_url: "https://google-meet-lti.apu.edu/api/v1/oauthcallback"

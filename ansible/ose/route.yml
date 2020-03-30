@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: lti-googlemeet
+  namespace: "{{ openshift.project }}"
+spec:
+  host: "{{ app.hostname }}"
+  to:
+    kind: Service
+    name: lti-googlemeet
+  port:
+    targetPort: 3000-tcp
+  tls:
+    termination: edge

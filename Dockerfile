@@ -1,8 +1,5 @@
-FROM quay.apu.edu/intdev/oracle-client:latest
+FROM node
 MAINTAINER Azusa Pacific University
-
-RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash - && \
-    yum install -y nodejs
 
 RUN mkdir -p /home/app
 WORKDIR /home/app

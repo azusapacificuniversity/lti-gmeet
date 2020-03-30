@@ -1,18 +1,11 @@
 require('dotenv').config();
+const oAuth1Sign = require('./classes/oauth1sign.js');
 const util = require('util');
-const ldap = require('./ldap/conn.js');
 const knex = require('./knex/conn.js');
+const GoogleCalendar = require('./classes/googleCalendar.js');
+const OAuth2Client = require('./classes/oAuth2GApi.js');
+const StoreLookupRepo = require('./classes/storeLookup.js');
 const backend = process.env.BACKEND;
-
-function createLdapConn(_logger = console) {
-    return new ldap(
-        process.env.LDAP_BASE,
-        process.env.LDAP_URL,
-        process.env.LDAP_DN,
-        process.env.LDAP_PWD,
-        _logger
-    );
-}
 
 function createKnexConn(_logger = console) {
     return new knex(
@@ -25,24 +18,34 @@ function createKnexConn(_logger = console) {
     );
 }
 
-function createConn(_logger = console) {
-    switch (backend) {
-        case 'ldap':
-            return createLdapConn(_logger);
-            break;
-        case 'knex':
-            return createKnexConn(_logger);
-            break;
-    }
-    throw new Exception("Invalid BACKEND env variable.");
+function createOAuth1Sign() {
+    return new oAuth1Sign(
+        process.env.HOSTNAME,
+        process.env.OAUTH_CONSUMER_KEY,
+        process.env.OAUTH_CONSUMER_SECRET
+    );
 }
 
-function createRepository(repo, _logger = console) {
-    var Repo = require(util.format('./%s/repos/%s.js', backend, repo))
-    return new Repo(createConn(), _logger);
+function createStoreRepo(_knex = createKnexConn(), _logger = console) {
+    return new StoreLookupRepo(_knex, _logger);
+}
+
+function createGCal(oAuth2Client = createOAuthClient(), _logger = console) {
+    return new GoogleCalendar(oAuth2Client, _logger);
+}
+
+function createOAuthClient(_logger = console) {
+    return new OAuth2Client(
+        process.env.GCAL_OAUTH_CLIENT_ID,
+        process.env.GCAL_OAUTH_CLIENT_SECRET,
+        process.env.GCAL_OAUTH_REDIRECT_URL
+    );
 }
 
 module.exports = {
-    createLdapConn,
-    createRepository
+    createOAuthClient,
+    createStoreRepo,
+    createGCal,
+    createKnexConn,
+    createOAuth1Sign
 };

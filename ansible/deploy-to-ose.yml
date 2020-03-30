@@ -1,0 +1,41 @@
+---
+- name: Deploy Google Meet LTI project to Openshift
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  module_defaults:
+    k8s:
+      state: present
+      merge_type: json
+      namespace: "{{ openshift.project }}"
+      verify_ssl: no
+
+
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+  tasks:
+
+    - name: Create the Openshift Secret that holds the application env
+      k8s:
+        definition: "{{ lookup('template', './ose/secret.yml') }}"
+
+    - name: Create an ImageStream
+      k8s:
+        definition: "{{ lookup('template', './ose/image-stream.yml') }}"
+
+    - name: Create a Build Config
+      k8s:
+        definition: "{{ lookup('template', './ose/build-config.yml') }}"
+
+    - name: Create a Deployment
+      k8s:
+        definition: "{{ lookup('template', './ose/deployment-config.yml') }}"
+
+    - name: Create the Service
+      k8s:
+        definition: "{{ lookup('template', './ose/service.yml') }}"
+
+    - name: Create the Route
+      k8s:
+        definition: "{{ lookup('template', './ose/route.yml') }}"

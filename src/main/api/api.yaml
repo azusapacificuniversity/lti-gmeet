@@ -16,37 +16,65 @@ paths:
     post:
       tags:
       - developers
-      summary: Display redirect button and a phone number
+      summary: Redirect the user to the appropriate Google Meet URL, if a URL exists
       description: |
-        By passing in the appropriate options, you can search for
-        appropriate persons within the ldap database
+        Redirects the user to the Google Meet, if the Google Meet has been created,
+        otherwise an HTML file is sent explaining to the user the Google event has
+        not been created yet
       x-exegesis-controller: hangoutController
-      operationId: gMeet
+      operationId: ltiHtmlPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
       responses:
         "200":
-          description: search results matching criteria
+          description: Not ready, needs authorization
+          content:
+            text/html:
+              schema:
+                type: object
+        "301":
+          description: Redirect to Google Meet
+          content:
+            text/html:
+              schema:
+                type: object
         "400":
           description: Class Code not specified
-  /ping:
+  /oauthcallback:
     get:
       tags:
       - developers
-      summary: receive a pong response from the server
+      summary: oAuth redirects here
       description: |
-        By going to the ping endpoint, the server
-        will send pong if the request is succesful
-      operationId: getPong
-      x-exegesis-controller: pingController
+        After a successful authorization, Google should redirect the user
+        to this endpoint. Furthermore, this endpoint will create the calendar
+        event, save it to the database and return the Google Meet link
+      operationId: oAuthCallback
+      x-exegesis-controller: authController
+      parameters:
+      - name: code
+        in: query
+        description: Authorization code coming from Google
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: State of the redirect from Google
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
-        "200":
-          description: receive 'pong' from the server
+        "301":
+          description: Redirect to Google Meet
           content:
-            application/json:
+            text/html:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pong'
-components:
-  schemas:
-    Pong:
-      type: string
+                type: object

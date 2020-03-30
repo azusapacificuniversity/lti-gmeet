@@ -4,7 +4,8 @@
   "description": "APU LTS Google Meet",
   "main": "src/main/index.js",
   "scripts": {
-    "test": ""
+    "start": "node ./src/main/index.js",
+    "test": "./node_modules/.bin/cucumber-js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,25 @@
   "author": "Azusa Pacific University",
   "license": "SEE LICENSE IN README.md",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "exegesis-express": "^2.0.0",
+    "exegesis-plugin-context": "^1.0.2",
     "express": "^4.17.1",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.0",
+    "googleapis": "^48.0.0",
+    "handlebars": "^4.7.3",
+    "js-yaml": "^3.13.1",
     "knex": "^0.20.8",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "oauth-signature": "^1.5.0",
     "uuid": "^7.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
     "nodemon": "^2.0.2"
   }
 }
