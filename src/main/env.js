@@ -3,7 +3,7 @@ const oAuth1Sign = require('./classes/oauth1sign.js');
 const util = require('util');
 const knex = require('./knex/conn.js');
 const GoogleCalendar = require('./classes/googleCalendar.js');
-const OAuth2Client = require('./auth.js');
+const OAuth2Client = require('./classes/oAuth2GApi.js');
 const StoreLookupRepo = require('./classes/storeLookup.js');
 const backend = process.env.BACKEND;
 
