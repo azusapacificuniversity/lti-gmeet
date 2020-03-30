@@ -6,7 +6,7 @@ exports.ltiHtmlPost = async function(context) {
 
     let knex = context.extraContext.knex;
     let course_id = context.requestBody.custom_canvas_course_id;
-    let roles = context.requestBody.roles ? context.requestBody.roles : 'student';
+    let roles = context.requestBody.roles || 'student';
 
     // Authenticate user
     let oAuth1Sign = context.extraContext.oAuth1Sign;
