@@ -1,4 +1,4 @@
-require('./env.js');
+require('../env.js');
 const expressSess = require('express-session');
 var MySQLStore = require('express-mysql-session')(expressSess);
 
