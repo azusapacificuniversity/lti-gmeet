@@ -8,11 +8,6 @@ exports.ltiHtmlPost = function(context) {
     return lti(context.extraContext.knex, context.requestBody.custom_canvas_course_id, context.requestBody.roles, context);
 }
 
-exports.ltiHtmlGet = function(context) {
-    context.res.setHeader('Content-Type', 'text/html');
-    return lti(context.extraContext.knex, context.params.query.course_id, context.params.query.roles, context);
-}
-
 async function lti(knex, course_id, roles = 'student', context) {
     // Authenticate user
     let oAuth1Sign = context.extraContext.oAuth1Sign;
