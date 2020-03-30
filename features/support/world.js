@@ -12,8 +12,8 @@ class LtiGoogleMeetWorld {
         this.ltiMeet = new LtiMeet(this.cal, this.repo);
     }
 
-    async meetByClassId(classId){
-        this.ltiMeet.meetByClassId(classId);
+    async findMeetByClassId(classId){
+        this.ltiMeet.findMeetByClassId(classId);
     }
 }
 
