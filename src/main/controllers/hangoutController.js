@@ -1,7 +1,5 @@
 const env = require("../env.js");
 const LtiMeet = require('../classes/LtiMeet.js');
-const fs = require('fs');
-const path = require('path');
 
 exports.ltiHtmlPost = function(context) {
     context.res.setHeader('Content-Type', 'text/html');
