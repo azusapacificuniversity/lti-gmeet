@@ -1,12 +1,13 @@
 const env = require("../env.js");
 const LtiMeet = require('../classes/LtiMeet.js');
 
-exports.ltiHtmlPost = function(context) {
+exports.ltiHtmlPost = async function(context) {
     context.res.setHeader('Content-Type', 'text/html');
-    return lti(context.extraContext.knex, context.requestBody.custom_canvas_course_id, context.requestBody.roles, context);
-}
 
-async function lti(knex, course_id, roles = 'student', context) {
+    let knex = context.extraContext.knex;
+    let course_id = context.requestBody.custom_canvas_course_id;
+    let roles = context.requestBody.roles ? context.requestBody.roles : 'student';
+
     // Authenticate user
     let oAuth1Sign = context.extraContext.oAuth1Sign;
     let oAuthResult = oAuth1Sign.authSignature("/api/v1" + context.route.path, context.requestBody);
