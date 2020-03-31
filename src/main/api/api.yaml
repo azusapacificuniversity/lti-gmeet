@@ -78,3 +78,19 @@ paths:
             text/html:
               schema:
                 type: object
+  /xml:
+    get:
+      tags:
+      - developers
+      summary: Returns LTI configuration XML
+      description: |
+        Returns LTI configuration XML
+      x-exegesis-controller: xmlController
+      operationId: xmlCallback
+      responses:
+        "200":
+          description: Send XML
+          content:
+            application/xml:
+              schema:
+                type: object
