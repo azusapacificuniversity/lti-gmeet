@@ -29,17 +29,17 @@ function parseYAML(file) {
     const methods = Object.keys(obj[key]);
     for (let i = 0; i < methods.length; i++) {
       const endpoint = obj[key][methods[i]];
-      console.log(`## ${path} - ${methods[i].toUpperCase()}\n`);
+      console.log(`\n### ${path} - ${methods[i].toUpperCase()}\n`);
       console.log(`Summary: ${formatString(endpoint.summary)}`);
       console.log(`Description: ${formatString(endpoint.description)}`);
       const parameters = [];
       console.log('#### Parameters');
       if (endpoint.parameters) {
         for (let j = 0; j < endpoint.parameters.length; j++) {
-          console.log(`##### ${endpoint.parameters[j].name}`);
-          console.log(`Description: ${endpoint.parameters[j].description}`);
-          console.log(`Required: ${endpoint.parameters[j].required}`);
-          console.log(`Data Type: ${endpoint.parameters[j].schema.type}`);
+          console.log(` - ##### ${endpoint.parameters[j].name}`);
+          console.log(`  - Description: ${endpoint.parameters[j].description}`);
+          console.log(`  - Required: ${endpoint.parameters[j].required}`);
+          console.log(`  - Data Type: ${endpoint.parameters[j].schema.type}`);
           parameters.push({
             param: endpoint.parameters[j].name,
             description: endpoint.parameters[j].description,
@@ -52,10 +52,10 @@ function parseYAML(file) {
       }
       const codes = Object.keys(endpoint.responses);
       const responses = [];
-      console.log('#### Responses');
+      console.log('\n#### Responses');
       for (let k = 0; k < codes.length; k++) {
-        console.log(`**Status Code: ${codes[k]}**`);
-        console.log(`Description: ${endpoint.responses[codes[k]].description}`);
+        console.log(` - **Status Code: ${codes[k]}**`);
+        console.log(`  - Description: ${endpoint.responses[codes[k]].description}`);
         responses.push({
           code: codes[k],
           description: endpoint.responses[codes[k]].description,
