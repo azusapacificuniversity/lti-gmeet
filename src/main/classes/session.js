@@ -1,6 +1,10 @@
 const expressSess = require('express-session');
 var MySQLStore = require('express-mysql-session')(expressSess);
 
+/**
+ * Connect to the mySQL DB instance and
+ * create the required session tables, if they do not already exsist
+ */
 const MySQLoptions = {
     host: process.env.DB_HOST,
     port: 3306,
@@ -17,6 +21,9 @@ const MySQLoptions = {
     }
 };
 
+/**
+ * Export the session info to be used by other files
+ */
 module.exports = expressSess({
     secret: process.env.SESSION_SECRET,
     resave: false,

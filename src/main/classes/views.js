@@ -14,6 +14,12 @@ class Views {
         handlebars.registerPartial('layouts/base', this._compileTemplate(BASE));
     }
 
+    /**
+     * Retrives a view
+     *
+     * @param {String} name The name of the view
+     * @param {Object} data The data needed for the view
+     */
     getView(name, data) {
         if (!Object.keys(VIEWS).includes(name))
             throw new Error(`Requested view ${name} does NOT exist.`);
@@ -22,6 +28,11 @@ class Views {
         return template(data);
     }
 
+    /**
+     * Retrives a template
+     *
+     * @param {String} tmplName The name of the template
+     */
     _getTemplate(tmplName) {
         if (Object.keys(this.compiled).includes(tmplName))
             return this.compiled[tmplName];
@@ -30,6 +41,12 @@ class Views {
         return this.compiled[tmplName] = this._compileTemplate(_path);
     }
 
+
+    /**
+     * Retrives a template
+     *
+     * @param {String} _path The path to the template
+     */
     _compileTemplate(_path) {
         let source = fs.readFileSync(path.resolve(_path)).toString();
         return handlebars.compile(source);

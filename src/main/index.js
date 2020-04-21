@@ -10,11 +10,13 @@ const bodyParser = require('body-parser');
 const Views = require('./classes/views.js');
 const LtiMeet = require('./classes/LtiMeet.js');
 
+// create environment
 const knex = env.createKnexConn();
 const views = new Views();
 const oAuth1Sign = env.createOAuth1Sign();
 
 async function startServer() {
+    // set options for exegesis
     const options = {
         plugins: [
             exegesisContext({
@@ -27,15 +29,19 @@ async function startServer() {
         allowMissingControllers: false,
     };
 
+    // initialize exegesis for api.yaml
     const exegesisApiMiddleware = await exegesisExpress.middleware(
         path.resolve(__dirname, pathApi),
         options
     );
 
+    // initialize exegesis for views.yaml
     const exegesisViewsMiddleware = await exegesisExpress.middleware(
         path.resolve(__dirname, pathViews),
         options
     );
+
+    // initialize express
     const app = express();
     const port = 3000;
 
@@ -46,6 +52,7 @@ async function startServer() {
         extended: true
     }));
 
+    // configure express
     app.use(express.static(path.resolve(__dirname + '/static')));
     app.use('/api/v1', exegesisApiMiddleware);
     app.use(exegesisViewsMiddleware);
@@ -64,6 +71,7 @@ async function startServer() {
         });
     });
 
+    // start listening to port 3000 through express
     app.listen(port, () => console.log(`Google Meet LTI app listening on port ${port}!`))
 }
 
