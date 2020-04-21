@@ -1,5 +1,7 @@
 .env
 node_modules/
+src/main/static/branding/*
+!src/main/static/branding/example
 
 # Ignore Gradle project-specific cache directory
 .gradle
