@@ -1,3 +1,3 @@
-exports.getPong = function getPong(context) {
-  return "pong";
+exports.getPong = function getPong() {
+  return 'pong';
 };

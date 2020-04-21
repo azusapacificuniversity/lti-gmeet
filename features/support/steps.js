@@ -1,16 +1,15 @@
 // features/support/steps.js
-const { Given, When, Then } = require("cucumber");
-const { expect } = require("chai");
+const { Given, When, Then } = require('cucumber');
+const { expect } = require('chai');
 
-Given("a course in Canvas {int}", function(number) {
+Given('a course in Canvas {int}', function (number) {
   this.setTo(number);
 });
 
-When("I increment the variable by {int}", function(number) {
+When('I increment the variable by {int}', function (number) {
   this.incrementBy(number);
 });
 
-Then("the variable should contain {int}", function(number) {
+Then('the variable should contain {int}', function (number) {
   expect(this.variable).to.eql(number);
 });
-

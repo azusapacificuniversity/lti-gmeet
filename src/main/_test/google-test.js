@@ -1,11 +1,12 @@
-const googleCalendar = require('../classes/googleCalendar')
-const config = require('/Users/greg/Documents/Projects/lti.googlemeet/src/main/_test/client_secret.json')
-const user = 'imtexpdeveloper@apu.edu'
+const GoogleCalendar = require('../classes/googleCalendar');
+const config = require('/Users/greg/Documents/Projects/lti.googlemeet/src/main/_test/client_secret.json');
 
-let calendar = new googleCalendar(config, user)
-let dummyCanvas = {
-    course_id: 9999
-} 
-let event = calendar.createEvent(dummyCanvas, 'request')
-.then(res => {console.log(res);})
-.catch(err => {console.err(err);})
+const user = 'imtexpdeveloper@apu.edu';
+
+const calendar = new GoogleCalendar(config, user);
+const dummyCanvas = {
+  course_id: 9999,
+};
+calendar.createEvent(dummyCanvas, 'request')
+  .then((res) => { console.log(res); })
+  .catch((err) => { console.err(err); });

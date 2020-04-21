@@ -1,25 +1,25 @@
 const ConnClass = require('../knex/conn.js');
 const Store = require('../controllers/storeLookup.js');
 
-let knexConnection = new ConnClass()
-let store = new Store(knexConnection);
+const knexConnection = new ConnClass();
+const store = new Store(knexConnection);
 
-for (var i = 0; i < 999; i++) {
-    let event = {
-        id: i,
-        link: 'https://www.google.com',
-        phone: '3238041862',
-        pin: 'fghjgfdiuytredrftyh'
+for (let i = 0; i < 999; i += 1) {
+  const event = {
+    id: i,
+    link: 'https://www.google.com',
+    phone: '3238041862',
+    pin: 'fghjgfdiuytredrftyh',
 
-    }
+  };
 
-    store.saveCourse(event)
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => {
-            console.err(err)
-        })
+  store.saveCourse(event)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.err(err);
+    });
 }
 
 // This tests if it saves to the database

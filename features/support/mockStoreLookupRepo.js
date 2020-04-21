@@ -1,15 +1,15 @@
 class mockStoreLookupRepo {
-    constructor(arr) {
-        this.arr = arr;
-    }
+  constructor(arr) {
+    this.arr = arr;
+  }
 
-    async saveCourse(event) {
-        return this.arr.push(event);
-    }
+  async saveCourse(event) {
+    return this.arr.push(event);
+  }
 
-    async findByClassId(classId) {
-        return this.arr.find(event => event.class_id == classId);
-    }
+  async findByClassId(classId) {
+    return this.arr.find((event) => event.class_id == classId);
+  }
 }
 
 module.exports = mockStoreLookupRepo;

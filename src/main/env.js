@@ -1,11 +1,9 @@
 require('dotenv').config();
-const oAuth1Sign = require('./classes/oauth1sign.js');
-const util = require('util');
-const knex = require('./knex/conn.js');
+const OAuth1Sign = require('./classes/oauth1sign.js');
+const Knex = require('./knex/conn.js');
 const GoogleCalendar = require('./classes/googleCalendar.js');
 const OAuth2Client = require('./classes/oAuth2GApi.js');
 const StoreLookupRepo = require('./classes/storeLookup.js');
-const backend = process.env.BACKEND;
 
 /**
  * Creates the Knex instance using environment variables
@@ -13,14 +11,14 @@ const backend = process.env.BACKEND;
  * @param {Object} _logger An optional logger, incase you want to customize your logging output
  */
 function createKnexConn(_logger = console) {
-    return new knex(
-        process.env.DB_TYPE,
-        process.env.DB_HOST,
-        process.env.DB_NAME,
-        process.env.DB_USER,
-        process.env.DB_PASS,
-        _logger
-    );
+  return new Knex(
+    process.env.DB_TYPE,
+    process.env.DB_HOST,
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
+    _logger,
+  );
 }
 
 /**
@@ -28,11 +26,11 @@ function createKnexConn(_logger = console) {
  *
  */
 function createOAuth1Sign() {
-    return new oAuth1Sign(
-        process.env.HOSTNAME,
-        process.env.OAUTH_CONSUMER_KEY,
-        process.env.OAUTH_CONSUMER_SECRET
-    );
+  return new OAuth1Sign(
+    process.env.HOSTNAME,
+    process.env.OAUTH_CONSUMER_KEY,
+    process.env.OAUTH_CONSUMER_SECRET,
+  );
 }
 
 /**
@@ -42,7 +40,18 @@ function createOAuth1Sign() {
  * @param {Object} _logger An optional logger, incase you want to customize your logging output
  */
 function createStoreRepo(_knex = createKnexConn(), _logger = console) {
-    return new StoreLookupRepo(_knex, _logger);
+  return new StoreLookupRepo(_knex, _logger);
+}
+
+/**
+ * Creates the oAuth2 client for Google Calendar
+ */
+function createOAuthClient() {
+  return new OAuth2Client(
+    process.env.GCAL_OAUTH_CLIENT_ID,
+    process.env.GCAL_OAUTH_CLIENT_SECRET,
+    process.env.GCAL_OAUTH_REDIRECT_URL,
+  );
 }
 
 /**
@@ -52,26 +61,13 @@ function createStoreRepo(_knex = createKnexConn(), _logger = console) {
  * @param {Object} _logger An optional logger, incase you want to customize your logging output
  */
 function createGCal(oAuth2Client = createOAuthClient(), _logger = console) {
-    return new GoogleCalendar(oAuth2Client, _logger);
-}
-
-/**
- * Creates the oAuth2 client for Google Calendar
- *
- * @param {Object} _logger An optional logger, incase you want to customize your logging output
- */
-function createOAuthClient(_logger = console) {
-    return new OAuth2Client(
-        process.env.GCAL_OAUTH_CLIENT_ID,
-        process.env.GCAL_OAUTH_CLIENT_SECRET,
-        process.env.GCAL_OAUTH_REDIRECT_URL
-    );
+  return new GoogleCalendar(oAuth2Client, _logger);
 }
 
 module.exports = {
-    createOAuthClient,
-    createStoreRepo,
-    createGCal,
-    createKnexConn,
-    createOAuth1Sign
+  createOAuthClient,
+  createStoreRepo,
+  createGCal,
+  createKnexConn,
+  createOAuth1Sign,
 };
