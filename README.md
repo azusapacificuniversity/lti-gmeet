@@ -8,7 +8,7 @@
 $ npm i
 ```
 
-2. Add a favion.png and logo.png to the `/src/main/branding` folder, there are examples in `/src/main/branding/examples`
+2. Add a favion.png and logo.svg to the `/src/main/branding` folder, there are examples in `/src/main/branding/examples`
 
 ## Prepare the environment variables
 
