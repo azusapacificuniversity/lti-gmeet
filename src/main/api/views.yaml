@@ -19,7 +19,7 @@ paths:
       summary: receive a pong response from the server
       description: |
         By going to the ping endpoint, the server
-        will send pong if the request is succesful
+        will send pong if the request is successful
       operationId: getPong
       x-exegesis-controller: pingController
       responses:
