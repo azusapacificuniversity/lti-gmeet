@@ -8,12 +8,14 @@ all:
       oauth_consumer_key: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/dev:oauth_consumer_key')}}"
       oauth_consumer_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/dev:oauth_consumer_secret')}}"
       session_secret: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/dev:session_secret')}}"
+      favicon_png: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/common:favicon.png')}}"
+      logo_svg: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/app/common:logo.svg')}}"
     openshift:
-      project: intdev
+      project: test-lti-gmeet
       git_source_secret: git-intdev-ssh
     git:
       uri: 'ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git'
-      branch: develop
+      branch: feature/INTLMS-392-cleanup-google-lti-tool-so-we-can-open-source-it
     database:
       db_type: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/dev:db_type')}}"
       db_name: "{{ lookup('hashi_vault', 'secret=secret/app/lti-googlemeet/database/dev:db_name')}}"
