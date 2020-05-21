@@ -8,7 +8,7 @@
 $ npm i
 ```
 
-2. Add a favion.png and logo.svg to the `/src/main/branding` folder, there are examples in `/src/main/branding/examples`
+2. Replace the example favicon.png and logo.svg in the `/src/main/branding` with your own favicon and logo
 
 ## Prepare the environment variables
 

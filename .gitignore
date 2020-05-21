@@ -1,7 +1,5 @@
 .env
 node_modules/
-src/main/static/branding/*
-!src/main/static/branding/example
 ansible/filter_plugins/escape_quote.pyc
 ansible/filter_plugins/escape_slashes.pyc
 ansible/filter_plugins/__pycache__
