@@ -8,6 +8,8 @@
 $ npm i
 ```
 
+2. Replace the example favicon.png and logo.svg in the `/src/main/branding` with your own favicon and logo
+
 ## Prepare the environment variables
 
 1. Create a .env file, by renaming the provided sample
@@ -86,22 +88,62 @@ From your browser, or an application such as Postman, you can hit the following 
 
 ## Available Routes:
 
-#### /ping - GET
+### /hangout/url - POST
 
-Responds with `pong` and a `200` status code
+Summary: Redirect the user to the appropriate Google Meet URL, if a URL exists
+Description: Redirects the user to the Google Meet, if the Google Meet has been created, otherwise an HTML file is sent explaining to the user the Google event has not been created yet
+#### Parameters
+None
 
-#### /api/v1/lti - GET
+#### Responses
+ - **Status Code: 200**
+  - Description: Not ready, needs authorization
+ - **Status Code: 301**
+  - Description: Redirect to Google Meet
+ - **Status Code: 400**
+  - Description: Class Code not specified
 
-Display LTI results for students, then returns
-either a `200` or `400`
+### /oauthcallback - GET
 
-#### /api/v1/hangout/url - POST
+Summary: oAuth redirects here
+Description: After a successful authorization, Google should redirect the user to this endpoint. Furthermore, this endpoint will create the calendar event, save it to the database and return the Google Meet link
+#### Parameters
+ - ##### code
+  - Description: Authorization code coming from Google
+  - Required: true
+  - Data Type: string
+ - ##### state
+  - Description: State of the redirect from Google
+  - Required: false
+  - Data Type: string
 
-Redirects the user to the appropriate Google Meet URL, if a URL exists in the database, then returns either a `200`, `301`, or `400`
+#### Responses
+ - **Status Code: 301**
+  - Description: Redirect to Google Meet
 
-#### /api/v1/oauthcallback - GET
+### /xml - GET
 
-After a successful oAuth, Google redirects the user to this endpoint and, a Google Calendar event will be created on the users calendar, then returns a `301`
+Summary: Returns LTI configuration XML
+Description: Returns LTI configuration XML
+#### Parameters
+None
+
+#### Responses
+ - **Status Code: 200**
+  - Description: Returns the XML configuration to be used by Canvas when creating the
+LTI in Canvas
+
+
+### /ping - GET
+
+Summary: receive a pong response from the server
+Description: By going to the ping endpoint, the server will send pong if the request is successful
+#### Parameters
+None
+
+#### Responses
+ - **Status Code: 200**
+  - Description: receive 'pong' from the server
 
 ## How to generate a markdown from the yaml files
 

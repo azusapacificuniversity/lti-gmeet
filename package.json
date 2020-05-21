@@ -1,20 +1,20 @@
 {
   "name": "lts-google-meet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "APU LTS Google Meet",
   "main": "src/main/index.js",
   "scripts": {
     "start": "node ./src/main/index.js",
-    "test": "./node_modules/.bin/cucumber-js"
+    "test": "./node_modules/.bin/cucumber-js",
+    "pretest": "./node_modules/.bin/eslint . --fix"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@git.apu.edu:7999/intdev/lti.googlemeet.git"
   },
   "keywords": [
-    "APU",
     "Canvas",
-    "API"
+    "LTI"
   ],
   "author": "Azusa Pacific University",
   "license": "SEE LICENSE IN README.md",
@@ -27,7 +27,7 @@
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.0",
     "googleapis": "^48.0.0",
-    "handlebars": "^4.7.3",
+    "handlebars": "^4.7.6",
     "js-yaml": "^3.13.1",
     "knex": "^0.20.8",
     "mysql": "^2.18.1",
@@ -38,6 +38,9 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "cucumber": "^6.0.5",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
     "nodemon": "^2.0.2"
   }
 }

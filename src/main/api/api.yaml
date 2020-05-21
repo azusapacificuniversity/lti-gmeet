@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: PeopleAPI
-  description: Simple API that returns People based on Affiliation
+  title: Google Meet LTI
+  description: LTI for Canvas to generate Google Meet URLs for Canvas courses
   contact:
     email: intdev@apu.edu
   license:
@@ -10,12 +10,15 @@ info:
   version: 1.0.0
 tags:
 - name: developers
-  description: Operations available to regular developers
+  description: Operations available to developers
+- name: end-users
+  description: Operations available to end users
 paths:
   /hangout/url:
     post:
       tags:
       - developers
+      - end-users
       summary: Redirect the user to the appropriate Google Meet URL, if a URL exists
       description: |
         Redirects the user to the Google Meet, if the Google Meet has been created,
@@ -47,6 +50,7 @@ paths:
     get:
       tags:
       - developers
+      - end-users
       summary: oAuth redirects here
       description: |
         After a successful authorization, Google should redirect the user
@@ -76,5 +80,24 @@ paths:
           description: Redirect to Google Meet
           content:
             text/html:
+              schema:
+                type: object
+  /xml:
+    get:
+      tags:
+      - developers
+      - end-users
+      summary: Returns LTI configuration XML
+      description: |
+        Returns LTI configuration XML
+      x-exegesis-controller: xmlController
+      operationId: xmlCallback
+      responses:
+        "200":
+          description: |
+            Returns the XML configuration to be used by Canvas when creating the
+            LTI in Canvas
+          content:
+            application/xml:
               schema:
                 type: object
