@@ -1,6 +1,6 @@
 {
   "name": "lts-google-meet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "APU LTS Google Meet",
   "main": "src/main/index.js",
   "scripts": {
