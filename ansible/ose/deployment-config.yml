@@ -31,15 +31,15 @@ spec:
                 name: lti-googlemeet
           name: lti-googlemeet
           imagePullPolicy: Always
-          # volumeMounts:
-          #   - name: volume-lti-googlemeet
-          #     mountPath: /home/app/static/branding/logo.svg
-          #     subPath: logo_svg
-          #     readOnly: true
-          #   - name: volume-lti-googlemeet
-          #     mountPath: /home/app/static/branding/favicon.png
-          #     subPath: favicon_png
-          #     readOnly: true
+          volumeMounts:
+            - name: volume-lti-googlemeet
+              mountPath: /home/app/static/branding/logo.svg
+              subPath: logo_svg
+              readOnly: true
+            - name: volume-lti-googlemeet
+              mountPath: /home/app/static/branding/favicon.png
+              subPath: favicon_png
+              readOnly: true
           imagePullPolicy: Always
           name: lti-googlemeet
           ports:
@@ -47,10 +47,10 @@ spec:
               protocol: TCP
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      # volumes:
-      #   - name: volume-lti-googlemeet
-      #     configMap:
-      #       name: lti-googlemeet-config
+      volumes:
+        - name: volume-lti-googlemeet
+          configMap:
+            name: lti-googlemeet-config
       schedulerName: default-scheduler
   test: false
   triggers:
