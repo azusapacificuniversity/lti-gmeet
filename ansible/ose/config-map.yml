@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lti-googlemeet-config
+  namespace: "{{ openshift.project }}"
+data:
+  logo_svg: {{ app.logo_svg | escape_n_quote }}
+binaryData:
+  favicon_png: "{{ app.favicon_png }}"

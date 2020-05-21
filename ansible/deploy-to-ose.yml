@@ -24,6 +24,10 @@
       k8s:
         definition: "{{ lookup('template', './ose/image-stream.yml') }}"
 
+    - name: Create the Config Map
+      k8s:
+        definition: "{{ lookup('template', './ose/config-map.yml') }}"
+
     - name: Create a Build Config
       k8s:
         definition: "{{ lookup('template', './ose/build-config.yml') }}"
