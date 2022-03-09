@@ -1,4 +1,8 @@
-# Google Meet LTI
+# Google Meet LTI (Archived)
+
+## Archiving Notice
+
+There are now better Canvas / Google meet integrations than then "LTI Google Meet" application we built here, including an official one from Canvas. This served its purpose during the initial months of the COVID-19 pandemic.
 
 ## Prepare the environment
 
